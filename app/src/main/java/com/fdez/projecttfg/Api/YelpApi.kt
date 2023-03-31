@@ -2,11 +2,8 @@ package com.fdez.projecttfg.Api
 
 import com.fdez.projecttfg.Negocio
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 
 class YelpApi {
     companion object {
@@ -35,6 +32,8 @@ class YelpApi {
 
     suspend fun search(term: String, location: String): List<Negocio> {
         val response = service.searchBusinesses(term, location)
-        return response.businesses.map { negocio -> Negocio(negocio.name) }
+        return response.businesses.map { negocio -> Negocio(negocio.image_url,
+                negocio.is_closed, negocio.name, negocio.location) }
+
     }
 }

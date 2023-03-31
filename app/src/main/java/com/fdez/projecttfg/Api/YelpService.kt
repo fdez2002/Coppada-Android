@@ -13,6 +13,7 @@ interface YelpService {
         @Query("term") term: String,
         @Query("location") location: String
     ): BusinessSearchResponse
+    /*
     companion object {
         private const val BASE_URL = "https://api.yelp.com/v3/"
 
@@ -34,5 +35,7 @@ interface YelpService {
                 .create(YelpApi::class.java)
         }
     }
+
+     */
 
 }

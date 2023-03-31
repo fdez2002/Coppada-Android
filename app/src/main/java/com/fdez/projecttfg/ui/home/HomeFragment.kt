@@ -43,6 +43,9 @@ class HomeFragment : Fragment() {
 
         //Obtener datos de la API y guardarlos en la lista de negocios
         CoroutineScope(Dispatchers.IO).launch {
+            val negocios = YelpApi().search("pizza", "Madrid")
+            Log.d("MiApp", "Negocios: $negocios")
+
             negocioList = YelpApi().search("pizza", "Linares")
             withContext(Dispatchers.Main) {
                 // Configurar RecyclerView y Adapter
@@ -51,7 +54,9 @@ class HomeFragment : Fragment() {
                 val adapter = negocioList?.let { NegocioAdapter(it) }
                 recyclerView.adapter = adapter
             }
+
         }
+
 
         return root
     }
