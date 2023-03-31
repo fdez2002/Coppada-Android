@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.fdez.projecttfg.databinding.ActivityMainBinding
 import android.os.AsyncTask
 import android.util.Log
+import com.fdez.projecttfg.Api.YelpApi
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -29,33 +30,12 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_map, R.id.navigation_favorite
+                R.id.navigation_home, R.id.navigation_map, R.id.navigation_favorite, R.id.navigation_account
             )
         )
         navView.setupWithNavController(navController)
-        YelpSearchTask().execute("pizza", "Linares")
+        //YelpSearchTask().execute("pizza", "Linares")
     }
 
-    private inner class YelpSearchTask : AsyncTask<String, Void, String>() {
 
-        override fun doInBackground(vararg params: String): String? {
-            val term = params[0]
-            val location = params[1]
-
-            return try {
-                val api = YelpApi()
-                api.search(term, location)
-            } catch (e: IOException) {
-                Log.e(TAG, "Error al buscar en Yelp", e)
-                null
-            }
-        }
-
-
-        override fun onPostExecute(result: String?) {
-            if (result != null) {
-                Log.i(TAG, result)
-            }
-        }
-    }
 }
