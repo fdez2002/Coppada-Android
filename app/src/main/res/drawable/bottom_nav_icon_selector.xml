@@ -1,4 +1,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/bottom_nav_selected" android:state_checked="true" />
-    <item android:color="@color/bottom_nav_unselected" />
+    <item android:color="@color/md_theme_dark_errorContainer" android:state_checked="true" />
+    <item android:color="@color/action_bar_color" />
 </selector>

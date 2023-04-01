@@ -66,5 +66,12 @@
     <color name="bottom_nav_selected">#CAA7A7</color>
     <color name="bottom_nav_unselected">#B38E8E</color>
 
+
+    <color name="action_bar_color">#1E2428</color>
+
+
+
+
+
 </resources>
 

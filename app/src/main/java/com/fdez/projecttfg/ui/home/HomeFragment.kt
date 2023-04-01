@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
 
         //Obtener datos de la API y guardarlos en la lista de negocios
         CoroutineScope(Dispatchers.IO).launch {
-            val negocios = YelpApi().search("pizza", "Madrid")
+            val negocios = YelpApi().search("pizza", "Linares")
             Log.d("MiApp", "Negocios: $negocios")
 
             negocioList = YelpApi().search("pizza", "Linares")

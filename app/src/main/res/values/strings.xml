@@ -9,4 +9,10 @@
     <string name="title_account">Cuenta</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Textp app bar -->
+    <string name="tv_bienvecida">Bienvenido</string>
+    <string name="tv_q_desea">¿Que desea hacer?</string>
+    <string name="secarch">Busca tu restaurante, bar...</string>
+
 </resources>
