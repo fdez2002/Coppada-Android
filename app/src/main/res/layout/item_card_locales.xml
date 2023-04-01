@@ -37,6 +37,15 @@
                     android:text="Anyonio"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
 
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="10dip"
+                    android:numStars="5"
+                    android:progressTint="#FFC107"
+                    android:rating="2.5" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

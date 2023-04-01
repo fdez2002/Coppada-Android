@@ -1,9 +1,11 @@
 package com.fdez.projecttfg.Api
 
+import android.location.Geocoder
 import com.fdez.projecttfg.Negocio
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 class YelpApi {
     companion object {
@@ -32,8 +34,11 @@ class YelpApi {
 
     suspend fun search(term: String, location: String): List<Negocio> {
         val response = service.searchBusinesses(term, location)
-        return response.businesses.map { negocio -> Negocio(negocio.image_url,
-                negocio.is_closed, negocio.name, negocio.location) }
+        val sortedBusinesses = response.businesses.sortedByDescending { it.rating }
+        return sortedBusinesses.map { negocio ->
+            Negocio(negocio.image_url, negocio.is_closed, negocio.name, negocio.location, negocio.rating, negocio.review_count)
+        }
 
     }
+
 }

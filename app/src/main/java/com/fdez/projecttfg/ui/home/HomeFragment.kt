@@ -46,7 +46,8 @@ class HomeFragment : Fragment() {
             val negocios = YelpApi().search("pizza", "Linares")
             Log.d("MiApp", "Negocios: $negocios")
 
-            negocioList = YelpApi().search("pizza", "Linares")
+            //negocioList = YelpApi().search("pizza", "Linares")
+            negocioList = YelpApi().search("pizza", "Madrid")
             withContext(Dispatchers.Main) {
                 // Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvNegocios
