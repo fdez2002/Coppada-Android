@@ -8,15 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.BusinessSearchResponse
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.NegocioAdapter
+import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,44 +33,57 @@ import java.io.IOException
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
 
-    private  var negocioList: List<Negocio>? = null
+        private var _binding: FragmentHomeBinding? = null
+        private val binding get() = _binding!!
+
+        private var negocioList: List<Negocio>? = null
+
+
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View {
 
-        //Obtener datos de la API y guardarlos en la lista de negocios
-        CoroutineScope(Dispatchers.IO).launch {
-            val negocios = YelpApi().search("pizza", "Linares")
-            Log.d("MiApp", "Negocios: $negocios")
+            _binding = FragmentHomeBinding.inflate(inflater, container, false)
+            val root: View = binding.root
 
-            //negocioList = YelpApi().search("pizza", "Linares")
-            negocioList = YelpApi().search("pizza", "Madrid")
-            withContext(Dispatchers.Main) {
-                // Configurar RecyclerView y Adapter
-                val recyclerView = binding.rvNegocios
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                val adapter = negocioList?.let { NegocioAdapter(it) }
-                recyclerView.adapter = adapter
+            //Obtener datos de la API y guardarlos en la lista de negocios
+            CoroutineScope(Dispatchers.IO).launch {
+                negocioList = YelpApi().search("pizza", "Madrid")
+                withContext(Dispatchers.Main) {
+                    // Configurar RecyclerView y Adapter
+                    val recyclerView = binding.rvNegocios
+                    recyclerView.layoutManager = LinearLayoutManager(context)
+                    val adapter = negocioList?.let { NegocioAdapter(it) }
+                    recyclerView.adapter = adapter
+
+                    adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
+                        override fun onItemClick(negocio: Negocio) {
+                            val navController = findNavController()
+                            navController.navigate(R.id.action_navigation_home_to_detalleNegocioFragment)
+                        }
+                    })
+
+                }
+
+
             }
 
+            return root
         }
 
-
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+
+        }
 
 
 

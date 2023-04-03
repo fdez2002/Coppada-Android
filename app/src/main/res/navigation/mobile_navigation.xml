@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.fdez.projecttfg.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_detalleNegocioFragment"
+            app:destination="@id/detalleNegocioFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_map"
@@ -27,4 +31,9 @@
         android:name="com.fdez.projecttfg.ui.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/detalleNegocioFragment"
+        android:name="com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment"
+        android:label="fragment_detalle_negocio"
+        tools:layout="@layout/fragment_detalle_negocio" />
 </navigation>
