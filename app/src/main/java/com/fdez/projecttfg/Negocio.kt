@@ -10,7 +10,8 @@ data class Negocio(
     val name: String,
     val location: Location?,
     val rating: Double,
-    val review_count: Int
+    val review_count: Int,
+    val alias: String
 
 
 

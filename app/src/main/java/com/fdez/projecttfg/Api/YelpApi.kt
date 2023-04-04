@@ -36,9 +36,11 @@ class YelpApi {
         val response = service.searchBusinesses(term, location)
         val sortedBusinesses = response.businesses.sortedByDescending { it.rating }
         return sortedBusinesses.map { negocio ->
-            Negocio(negocio.image_url, negocio.is_closed, negocio.name, negocio.location, negocio.rating, negocio.review_count)
+            Negocio(negocio.image_url, negocio.is_closed, negocio.name, negocio.location, negocio.rating, negocio.review_count, negocio.alias)
         }
 
     }
+
+
 
 }

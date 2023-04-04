@@ -38,4 +38,12 @@
 
 
     <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Barra de acción transparente -->
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>

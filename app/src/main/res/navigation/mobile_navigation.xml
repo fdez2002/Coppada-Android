@@ -35,5 +35,9 @@
         android:id="@+id/detalleNegocioFragment"
         android:name="com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment"
         android:label="fragment_detalle_negocio"
-        tools:layout="@layout/fragment_detalle_negocio" />
+        tools:layout="@layout/fragment_detalle_negocio" >
+        <action
+            android:id="@+id/action_detalleNegocioFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

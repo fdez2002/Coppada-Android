@@ -1,12 +1,12 @@
 package com.fdez.projecttfg.ui.detalleNegocio
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.fdez.projecttfg.R
-import com.fdez.projecttfg.databinding.FragmentAccountBinding
 import com.fdez.projecttfg.databinding.FragmentDetalleNegocioBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -24,8 +24,12 @@ class DetalleNegocioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
         _binding = FragmentDetalleNegocioBinding.inflate(inflater, container, false)
+
+        binding.toolbarBackButton.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(R.id.action_detalleNegocioFragment_to_navigation_home)
+        }
 
 
         return binding.root
@@ -35,8 +39,13 @@ class DetalleNegocioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView?.visibility = View.GONE
+        val cadena = arguments?.getString("cadena")
+        Toast.makeText(context, "Nombre del negocio: $cadena", Toast.LENGTH_SHORT).show()
+
 
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -44,5 +53,15 @@ class DetalleNegocioFragment : Fragment() {
         bottomNavigationView?.visibility = View.VISIBLE
         bottomNavigationView = null
 
+    }
+
+    companion object {
+        fun newInstance(cadena: String): DetalleNegocioFragment {
+            val args = Bundle()
+            args.putString("cadena", cadena)
+            val fragment = DetalleNegocioFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
