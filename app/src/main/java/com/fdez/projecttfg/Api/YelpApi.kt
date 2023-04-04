@@ -1,10 +1,13 @@
 package com.fdez.projecttfg.Api
 
 import android.location.Geocoder
+import com.fdez.projecttfg.DetailBusiness
 import com.fdez.projecttfg.Negocio
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.util.*
 
 class YelpApi {
@@ -40,6 +43,13 @@ class YelpApi {
         }
 
     }
+    suspend fun getBusinessDetails(alias: String): DetailBusiness? {
+        val response = service.getNegocioDetalle(alias)
+        return DetailBusiness(response.id, response.name, response.rating, response.review_count, response.location, response.phone
+            , response.photos, response.price, response.url)
+    }
+
+
 
 
 

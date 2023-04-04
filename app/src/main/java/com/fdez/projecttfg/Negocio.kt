@@ -1,4 +1,7 @@
 package com.fdez.projecttfg
+
+import com.denzcoskun.imageslider.models.SlideModel
+
 data class BusinessSearchResponse(
     val total: Int,
     val businesses: List<Negocio>
@@ -13,17 +16,6 @@ data class Negocio(
     val review_count: Int,
     val alias: String
 
-
-
-    /*
-    val rating: Double,
-    val phone: String,
-    val address: String,
-    val city: String,
-    val state: String,
-    val zipCode: String
-
-     */
 )
 data class Location(
     val address1: String,
@@ -35,3 +27,17 @@ data class Location(
     val state: String,
     val display_address: List<String>
 )
+data class DetailBusiness(
+    val id: String,
+    val name: String,
+    val rating: Double,
+    val review_count: Int,
+    val location: Location?,
+    val phone: String?,
+    val photos: List<String>,
+    //val hours: List<Hour>?,
+    //val categories: List<Category>,
+    val price: String?,
+    val url: String
+)
+
