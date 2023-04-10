@@ -1,6 +1,10 @@
 package com.fdez.projecttfg.ui.home
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.location.Criteria
+import android.location.Geocoder
+import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.BusinessSearchResponse
@@ -29,6 +35,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -50,6 +57,9 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
+
 
         // Si la lista de negocios no ha sido inicializada previamente, se obtienen los datos de la API
         if (!isDataLoaded) {
@@ -105,6 +115,8 @@ class HomeFragment : Fragment() {
 
         return root
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

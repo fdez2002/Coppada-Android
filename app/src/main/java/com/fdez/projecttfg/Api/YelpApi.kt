@@ -55,7 +55,7 @@ class YelpApi {
         val address = businessDetails?.location?.address1 ?: return null
         val geocoder = Geocoder(MyApp.instance, Locale.getDefault())
         try {
-            val results = geocoder.getFromLocationName(address, 1)
+            val results = geocoder.getFromLocationName(address, 5)
             if (results != null) {
                 if (results.isNotEmpty()) {
                     val latitude = results[0].latitude

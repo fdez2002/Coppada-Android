@@ -12,6 +12,10 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentDetalleNegocioBinding
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +29,9 @@ class DetalleNegocioFragment : Fragment() {
 
 
     private val binding get() = _binding!!
+
+    private var googleMap: GoogleMap? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,13 +55,16 @@ class DetalleNegocioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView?.visibility = View.GONE
+
+        val mapView = binding.mapView
+        activity?.runOnUiThread {
+            mapView.onCreate(savedInstanceState)
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
             val cadena = arguments?.getString("cadena")
-
             val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
             Log.d("tag", negocioDetalle.toString())
-
-
 
             if (negocioDetalle != null) {
                 withContext(Dispatchers.Main) {
@@ -67,16 +77,49 @@ class DetalleNegocioFragment : Fragment() {
                     binding.tvNombreN.text = negocioDetalle.name
                     binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
                     binding.tvPaginaWebN.text = negocioDetalle.url
-                    binding.tvContactoN.text= negocioDetalle.phone
+                    binding.tvContactoN.text = negocioDetalle.phone
                 }
             }
-            val businesses = negocioDetalle?.let { YelpApi().getBusinessLocation(negocioDetalle.alias) };
-            Log.d("tag", businesses.toString())
+
+            val businesses =
+                negocioDetalle?.let { YelpApi().getBusinessLocation(negocioDetalle.alias) }
+            if (businesses != null) {
+                Log.d("tag", businesses.first.toString())
+            }
+
+            mapView.post {
+                mapView.getMapAsync { map ->
+                    googleMap = map
+                    map.setOnMapLoadedCallback {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val location =
+                                YelpApi().getBusinessLocation(negocioDetalle?.alias ?: "")
+                            withContext(Dispatchers.Main) {
+                                if (location != null) {
+                                    val latLng =
+                                        businesses?.let { LatLng(it.first, businesses.second) }
+                                    latLng?.let {
+                                        CameraUpdateFactory.newLatLngZoom(
+                                            it,
+                                            15f
+                                        )
+                                    }?.let {
+                                        googleMap?.moveCamera(
+                                            it
+                                        )
+                                    }
+                                    latLng?.let {
+                                        MarkerOptions().position(it).title(negocioDetalle?.name)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-
-
-
     }
+
 
 
     override fun onDestroyView() {
@@ -84,6 +127,8 @@ class DetalleNegocioFragment : Fragment() {
         _binding = null
         bottomNavigationView?.visibility = View.VISIBLE
         bottomNavigationView = null
+
+
 
     }
 

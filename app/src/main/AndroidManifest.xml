@@ -19,6 +19,7 @@
         android:theme="@style/Theme.ProjectTFG"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <meta-data android:name="com.google.android.geo.API_KEY"  android:value="AIzaSyA8okmwE6W6Fe9oXKKXxmPeWmFpFavBIJo" />
 
         <activity
             android:name=".MainActivity"
