@@ -25,6 +25,8 @@ data class Location(
     val zip_code: String,
     val country: String,
     val state: String,
+    val latitude: Float,
+    val longitude: Float,
     val display_address: List<String>
 )
 data class DetailBusiness(
@@ -38,6 +40,7 @@ data class DetailBusiness(
     //val hours: List<Hour>?,
     //val categories: List<Category>,
     val price: String?,
-    val url: String
+    val url: String,
+    val alias: String
 )
 

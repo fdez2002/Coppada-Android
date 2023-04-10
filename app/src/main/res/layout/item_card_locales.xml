@@ -41,6 +41,7 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:isIndicator="true"
                     android:minHeight="10dip"
                     android:numStars="5"
                     android:progressTint="#FFC107"

@@ -2,6 +2,7 @@ package com.fdez.projecttfg.Api
 
 import android.location.Geocoder
 import com.fdez.projecttfg.DetailBusiness
+import com.fdez.projecttfg.MyApp
 import com.fdez.projecttfg.Negocio
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -46,7 +47,26 @@ class YelpApi {
     suspend fun getBusinessDetails(alias: String): DetailBusiness? {
         val response = service.getNegocioDetalle(alias)
         return DetailBusiness(response.id, response.name, response.rating, response.review_count, response.location, response.phone
-            , response.photos, response.price, response.url)
+            , response.photos, response.price, response.url, response.alias)
+    }
+    // Nuevo método para obtener la longitud y la latitud de un negocio
+    suspend fun getBusinessLocation(alias: String): Pair<Double, Double>? {
+        val businessDetails = getBusinessDetails(alias)
+        val address = businessDetails?.location?.address1 ?: return null
+        val geocoder = Geocoder(MyApp.instance, Locale.getDefault())
+        try {
+            val results = geocoder.getFromLocationName(address, 1)
+            if (results != null) {
+                if (results.isNotEmpty()) {
+                    val latitude = results[0].latitude
+                    val longitude = results[0].longitude
+                    return Pair(latitude, longitude)
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
     }
 
 

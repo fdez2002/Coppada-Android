@@ -41,8 +41,6 @@ class DetalleNegocioFragment : Fragment() {
         }
 
 
-
-
         return binding.root
     }
 
@@ -55,6 +53,9 @@ class DetalleNegocioFragment : Fragment() {
 
             val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
             Log.d("tag", negocioDetalle.toString())
+
+
+
             if (negocioDetalle != null) {
                 withContext(Dispatchers.Main) {
                     val imageList = ArrayList<SlideModel>() // Create image list
@@ -64,9 +65,16 @@ class DetalleNegocioFragment : Fragment() {
                     }
                     binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
                     binding.tvNombreN.text = negocioDetalle.name
+                    binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
+                    binding.tvPaginaWebN.text = negocioDetalle.url
+                    binding.tvContactoN.text= negocioDetalle.phone
                 }
             }
+            val businesses = negocioDetalle?.let { YelpApi().getBusinessLocation(negocioDetalle.alias) };
+            Log.d("tag", businesses.toString())
         }
+
+
 
     }
 

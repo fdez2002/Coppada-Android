@@ -13,6 +13,14 @@
     <!-- Textp app bar -->
     <string name="tv_bienvecida">Bienvenido</string>
     <string name="tv_q_desea">¿Que desea hacer?</string>
-    <string name="secarch">Busca tu restaurante, bar...</string>
+    <string name="secarch">Busca tu restaurante, bar…</string>
+
+    <!-- Texto detalle negocio -->
+    <string name="tv_informacion">Información</string>
+    <string name="tv_Web">Web</string>
+    <string name="tv_Contacto">Contacto</string>
+    <string name="tv_ubi">Ubicación</string>
+
+
 
 </resources>
