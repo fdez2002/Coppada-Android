@@ -25,11 +25,9 @@
     <string name="tv_resYBar">Restaurantes y bares</string>
     <string name="tv_cafeyter">Café y té</string>
     <string name="tv_copas">De copas</string>
-    <string name="tv_respaDomi">Reparto a domicilio</string>
+    <string name="tv_respaDomi">Fast Food</string>
     <string name="tv_rpaste">Pastelerías</string>
     <string name="tv_gasoli">Gasolineras</string>
-
-
 
 
 </resources>

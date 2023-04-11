@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_detalleNegocioFragment"
             app:destination="@id/detalleNegocioFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_detallCategoryFragment"
+            app:destination="@id/detallCategoryFragment" />
     </fragment>
 
     <fragment
@@ -38,6 +41,18 @@
         tools:layout="@layout/fragment_detalle_negocio" >
         <action
             android:id="@+id/action_detalleNegocioFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/detallCategoryFragment"
+        android:name="com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment"
+        android:label="fragment_detall_category"
+        tools:layout="@layout/fragment_detall_category" >
+        <action
+            android:id="@+id/action_detallCategoryFragment_to_detalleNegocioFragment"
+            app:destination="@id/detalleNegocioFragment" />
+        <action
+            android:id="@+id/action_detallCategoryFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
 </navigation>

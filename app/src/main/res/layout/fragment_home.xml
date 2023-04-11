@@ -119,15 +119,16 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/button1"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/buttonRestaBar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/forma_redondeada"
                     android:src="@drawable/restaurant_fill1_wght100_grad0_opsz48" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/tv_resYBar" />
 
             </LinearLayout>
@@ -140,15 +141,16 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/button2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/buttonCafeTe"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/forma_redondeada"
                     android:src="@drawable/local_cafe_fill1_wght100_grad0_opsz48" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/tv_cafeyter" />
 
             </LinearLayout>
@@ -161,9 +163,9 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/button3"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/buttonCopas"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/forma_redondeada"
                     android:src="@drawable/nightlife_fill1_wght100_grad0_opsz48" />
 
@@ -191,15 +193,16 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/button4"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/buttonRepDomici"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/forma_redondeada"
                     android:src="@drawable/food_bank_fill1_wght100_grad0_opsz48" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/tv_respaDomi" />
 
             </LinearLayout>
@@ -212,15 +215,16 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/button5"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/buttonOil"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/forma_redondeada"
                     android:src="@drawable/local_gas_station_fill1_wght100_grad200_opsz48" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/tv_gasoli" />
 
             </LinearLayout>
@@ -233,15 +237,16 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/button6"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/buttonPasteleri"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/forma_redondeada"
                     android:src="@drawable/cake_fill1_wght100_grad200_opsz48" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/tv_rpaste" />
 
             </LinearLayout>

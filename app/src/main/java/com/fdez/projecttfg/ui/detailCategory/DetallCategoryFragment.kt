@@ -1,54 +1,41 @@
-package com.fdez.projecttfg.ui.home
+package com.fdez.projecttfg.ui.detailCategory
 
-import android.content.ContentValues.TAG
-import android.content.Context
-import android.location.Criteria
-import android.location.Geocoder
-import android.location.LocationManager
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
-import com.fdez.projecttfg.BusinessSearchResponse
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.NegocioAdapter
 import com.fdez.projecttfg.R
-import com.fdez.projecttfg.databinding.FragmentHomeBinding
-
-import com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment
+import com.fdez.projecttfg.databinding.FragmentDetallCategoryBinding
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.util.*
 
 
-class HomeFragment : Fragment() {
+class DetallCategoryFragment : Fragment() {
 
     // Variable global para almacenar la lista de negocios
     private var negocioList: List<Negocio>? = null
 
     // Booleano para comprobar si la lista de negocios ya ha sido obtenida de la API
     private var isDataLoaded = false
+    private var _binding: FragmentDetallCategoryBinding? = null
 
-    private var _binding: FragmentHomeBinding? = null
+    private var bottomNavigationView: BottomNavigationView? = null
+
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -57,67 +44,36 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentDetallCategoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
         cargarRV()
 
-        binding.buttonRestaBar.setOnClickListener {
-            val categoria = "restaurantes,bars"
-            val titulo = "Bares y restaurantes"
-            navegarCategory(categoria, titulo)
-
-        }
-        binding.buttonCafeTe.setOnClickListener {
-            val categoria = "Coffee & Tea"
-            val titulo = "Café y té"
-            navegarCategory(categoria, titulo)
-        }
-        binding.buttonCopas.setOnClickListener {
-            val categoria = "bars"
-            val titulo = "De copas"
-            navegarCategory(categoria, titulo)
-        }
-        binding.buttonRepDomici.setOnClickListener {
-            val categoria = "Fast Food,Burgers,Pizza"
-            val titulo = "Fast Food"
-            navegarCategory(categoria, titulo)
-        }
-        binding.buttonOil.setOnClickListener {
-            val categoria = "Gasolineras"
-            val titulo = "Gasolineras"
-            navegarCategory(categoria, titulo)
-        }
-        binding.buttonPasteleri.setOnClickListener {
-            val categoria = "Bakeries"
-            val titulo = "Pastelerias"
-            navegarCategory(categoria, titulo)
-        }
 
         return root
     }
-    private fun navegarCategory(categoria: String, titulo: String){
-        val bundle = Bundle()
-        bundle.putString("category", categoria)
-        bundle.putString("titulo", titulo)
-        val fragment = DetallCategoryFragment.newInstance(categoria, titulo)
-        fragment.arguments = bundle
-        findNavController().navigate(
-            R.id.action_navigation_home_to_detallCategoryFragment,
-            bundle
-        )
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView?.visibility = View.GONE
+
+        val titulo = arguments?.getString("titulo")
+
+        binding.textViewTittle.text = titulo.toString()
+
+
     }
 
     private fun cargarRV() {
         // Si la lista de negocios no ha sido inicializada previamente, se obtienen los datos de la API
         if (!isDataLoaded) {
             CoroutineScope(Dispatchers.IO).launch {
-                negocioList = YelpApi().search("pizza", "Madrid")
+                val cadena = arguments?.getString("category")
+                negocioList = YelpApi().search(cadena.toString(), "Madrid")
                 Log.d("tag", negocioList.toString())
                 withContext(Dispatchers.Main) {
                     // Configurar RecyclerView y Adapter
-                    val recyclerView = binding.rvNegocios
+                    val recyclerView = binding.rvNegocios2
                     recyclerView.layoutManager = LinearLayoutManager(context)
                     val adapter = negocioList?.let { NegocioAdapter(it) }
                     recyclerView.adapter = adapter
@@ -131,7 +87,7 @@ class HomeFragment : Fragment() {
                             val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
                             fragment.arguments = bundle
                             findNavController().navigate(
-                                R.id.action_navigation_home_to_detalleNegocioFragment,
+                                R.id.action_detallCategoryFragment_to_detalleNegocioFragment,
                                 bundle
                             )
                         }
@@ -141,7 +97,7 @@ class HomeFragment : Fragment() {
             }
         } else {
             // Si la lista de negocios ya ha sido inicializada, se configura el RecyclerView con los datos ya cargados
-            val recyclerView = binding.rvNegocios
+            val recyclerView = binding.rvNegocios2
             recyclerView.layoutManager = LinearLayoutManager(context)
             val adapter = negocioList?.let { NegocioAdapter(it) }
             recyclerView.adapter = adapter
@@ -155,7 +111,7 @@ class HomeFragment : Fragment() {
                     val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
                     fragment.arguments = bundle
                     findNavController().navigate(
-                        R.id.action_navigation_home_to_detalleNegocioFragment,
+                        R.id.action_detallCategoryFragment_to_detalleNegocioFragment,
                         bundle
                     )
                 }
@@ -163,10 +119,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        bottomNavigationView?.visibility = View.VISIBLE
+        bottomNavigationView = null
     }
 
+    companion object {
+        fun newInstance(cadena: String, titulo: String): DetallCategoryFragment {
+            val args = Bundle()
+            args.putString("cadena", cadena)
+            args.putString("titulo", titulo)
+            val fragment = DetallCategoryFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 }
