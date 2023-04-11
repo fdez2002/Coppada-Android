@@ -61,7 +61,7 @@
 
                 <androidx.coordinatorlayout.widget.CoordinatorLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="132dp">
 
                     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
                     <androidx.core.widget.NestedScrollView
@@ -86,11 +86,160 @@
 
                     <com.google.android.material.search.SearchView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="131dp"
                         app:layout_anchor="@id/search_bar">
                         <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
                     </com.google.android.material.search.SearchView>
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/buttonRestaBar"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/forma_redondeada"
+                            android:src="@drawable/restaurant_fill1_wght100_grad0_opsz48" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/tv_resYBar" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/buttonCafeTe"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/forma_redondeada"
+                            android:src="@drawable/local_cafe_fill1_wght100_grad0_opsz48" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/tv_cafeyter" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/buttonCopas"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/forma_redondeada"
+                            android:src="@drawable/nightlife_fill1_wght100_grad0_opsz48" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tv_copas" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/buttonRepDomici"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/forma_redondeada"
+                            android:src="@drawable/food_bank_fill1_wght100_grad0_opsz48" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/tv_respaDomi" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/buttonOil"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/forma_redondeada"
+                            android:src="@drawable/local_gas_station_fill1_wght100_grad200_opsz48" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/tv_gasoli" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/buttonPasteleri"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/forma_redondeada"
+                            android:src="@drawable/cake_fill1_wght100_grad200_opsz48" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/tv_rpaste" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -105,154 +254,7 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="5dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/buttonRestaBar"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/forma_redondeada"
-                    android:src="@drawable/restaurant_fill1_wght100_grad0_opsz48" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/tv_resYBar" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/buttonCafeTe"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/forma_redondeada"
-                    android:src="@drawable/local_cafe_fill1_wght100_grad0_opsz48" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/tv_cafeyter" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/buttonCopas"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/forma_redondeada"
-                    android:src="@drawable/nightlife_fill1_wght100_grad0_opsz48" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_copas" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="5dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/buttonRepDomici"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/forma_redondeada"
-                    android:src="@drawable/food_bank_fill1_wght100_grad0_opsz48" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/tv_respaDomi" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/buttonOil"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/forma_redondeada"
-                    android:src="@drawable/local_gas_station_fill1_wght100_grad200_opsz48" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/tv_gasoli" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/buttonPasteleri"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/forma_redondeada"
-                    android:src="@drawable/cake_fill1_wght100_grad200_opsz48" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/tv_rpaste" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_negocios"
