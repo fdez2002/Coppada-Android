@@ -114,7 +114,6 @@ class HomeFragment : Fragment() {
         if (!isDataLoaded) {
             CoroutineScope(Dispatchers.IO).launch {
                 negocioList = YelpApi().search("pizza", "Madrid")
-                Log.d("tag", negocioList.toString())
                 withContext(Dispatchers.Main) {
                     // Configurar RecyclerView y Adapter
                     val recyclerView = binding.rvNegocios
@@ -124,10 +123,11 @@ class HomeFragment : Fragment() {
 
                     adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
                         override fun onItemClick(negocio: Negocio) {
-                            val nombreNegocioAlias = negocio.alias
+                            val nombreNegocioAlias = negocio.alias ?: return
 
                             val bundle = Bundle()
                             bundle.putString("cadena", nombreNegocioAlias)
+
                             val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
                             fragment.arguments = bundle
                             findNavController().navigate(

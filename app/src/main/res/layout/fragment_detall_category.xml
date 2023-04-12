@@ -3,19 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.detailCategory.DetallCategoryFragment">
 
-    <TextView
-        android:id="@+id/textViewTittle"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+
+        android:id="@+id/AppBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prueba"
-        android:textSize="34sp" />
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="string/page_title"
+            app:titleCentered="true"
+            app:navigationIcon="@drawable/arrow_back_fill0_wght200_grad0_opsz24" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNegocios2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textViewTittle"
+        android:layout_below="@id/AppBar"
         tools:listitem="@layout/item_card_locales" />
 </RelativeLayout>
