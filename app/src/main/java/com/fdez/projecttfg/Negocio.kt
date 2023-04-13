@@ -11,7 +11,7 @@ data class Negocio(
     val image_url: String,
     val is_closed: Boolean,
     val name: String,
-    val location: Location?,
+    val coordinates: Location?,
     val rating: Double,
     val review_count: Int,
     val alias: String

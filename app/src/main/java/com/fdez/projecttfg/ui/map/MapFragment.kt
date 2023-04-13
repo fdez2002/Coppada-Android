@@ -1,10 +1,14 @@
 package com.fdez.projecttfg.ui.map
 
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.fdez.projecttfg.Api.YelpApi
+import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -14,10 +18,19 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentMapBinding? = null
+
+    val negocioList = mutableListOf<Negocio>()
+
+    private var isDataLoaded = false
+
 
     private lateinit var mMap: GoogleMap
 
@@ -35,35 +48,78 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val root: View = binding.root
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
-
-
-        mapFragment.getMapAsync(this)
-
+        mapFragment.getMapAsync(this@MapFragment)
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Configura la cámara del mapa
-        val builder = LatLngBounds.Builder()
-        val sanFrancisco = LatLng(37.7749, -122.4194)
-        builder.include(sanFrancisco) // incluye San Francisco en el builder
-        val newYork = LatLng(40.7128, -74.0060)
-        builder.include(newYork) // incluye Nueva York en el builder
-        val paris = LatLng(48.8566, 2.3522)
-        builder.include(paris) // incluye París en el builder
-        val bounds = builder.build()
-        val padding = 100 // ajusta el padding según tus necesidades
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
 
-        // Agrega un marcador en San Francisco
-        mMap.addMarker(MarkerOptions().position(sanFrancisco).title("San Francisco"))
+            CoroutineScope(Dispatchers.IO).launch {
+            if (!isDataLoaded) {
 
-        // Agrega un marcador en Nueva York
-        mMap.addMarker(MarkerOptions().position(newYork).title("Nueva York"))
+                val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", "Madrid")
+                negocioList.addAll(negocioListFastFood)
+                val negocioListRestBar = YelpApi().search("restaurantes,bars", "Madrid")
+                negocioList.addAll(negocioListRestBar)
+                val negocioListCafeTe = YelpApi().search("Coffee & Tea", "Madrid")
+                negocioList.addAll(negocioListCafeTe)
+                //val negocioListOil = YelpApi().search("Gasolineras", "Madrid")
+                //negocioList.addAll(negocioListOil)
+                val negocioListBake = YelpApi().search("Bakeries", "Madrid")
+                negocioList.addAll(negocioListBake)
 
-        // Agrega un marcador en París
-        mMap.addMarker(MarkerOptions().position(paris).title("París"))
+
+                if (negocioList == null || negocioList.isEmpty()) {
+                    // Manejar el caso en que no se encuentren negocios
+                    return@launch
+                }
+
+                // Agrega un marcador en la ubicación de cada negocio en la lista
+                negocioList.forEach { negocio ->
+                    negocio.coordinates?.let { location ->
+                        val latLng =
+                            LatLng(location.latitude.toDouble(), location.longitude.toDouble())
+                        withContext(Dispatchers.Main) {
+                            mMap.addMarker(MarkerOptions().position(latLng).title(negocio.name))
+                        }
+                    }
+                }
+            }else{
+                negocioList.forEach { negocio ->
+                    negocio.coordinates?.let { location ->
+                        val latLng =
+                            LatLng(location.latitude.toDouble(), location.longitude.toDouble())
+                        withContext(Dispatchers.Main) {
+                            mMap.addMarker(MarkerOptions().position(latLng).title(negocio.name))
+                        }
+                    }
+                }
+            }
+
+
+            // Configura la cámara del mapa
+            val builder = LatLngBounds.Builder()
+            negocioList.forEach { negocio ->
+                negocio.coordinates?.let { location ->
+                    val latLng = LatLng(location.latitude.toDouble(), location.longitude.toDouble())
+                    withContext(Dispatchers.Main) {
+                        builder.include(latLng)
+                    }
+                }
+                val bounds = builder.build()
+                val padding = 100 // ajusta el padding según tus necesidades
+                withContext(Dispatchers.Main) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
+                }
+            }
+        }
+
     }
 
     override fun onDestroyView() {

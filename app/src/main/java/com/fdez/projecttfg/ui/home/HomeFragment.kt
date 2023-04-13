@@ -5,7 +5,6 @@ import android.content.Context
 import android.location.Criteria
 import android.location.Geocoder
 import android.location.LocationManager
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -113,6 +112,7 @@ class HomeFragment : Fragment() {
         // Si la lista de negocios no ha sido inicializada previamente, se obtienen los datos de la API
         if (!isDataLoaded) {
             CoroutineScope(Dispatchers.IO).launch {
+
                 negocioList = YelpApi().search("pizza", "Madrid")
                 withContext(Dispatchers.Main) {
                     // Configurar RecyclerView y Adapter
