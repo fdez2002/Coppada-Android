@@ -3,11 +3,13 @@ package com.fdez.projecttfg.ui.map
 import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
+import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.fdez.projecttfg.Api.YelpApi
+import com.fdez.projecttfg.CacheManager
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentMapBinding
@@ -31,8 +33,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var isDataLoaded = false
 
+    private val cache = LruCache<String, List<Negocio>>(1024) // 1024 = tamaño máximo de la caché en bytes
 
     private lateinit var mMap: GoogleMap
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -59,10 +63,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        CoroutineScope(Dispatchers.IO).launch {
+            val cacheKey = "negocioList"
+            val cache = CacheManager(requireContext())
 
-            CoroutineScope(Dispatchers.IO).launch {
-            if (!isDataLoaded) {
+            // Intenta obtener la lista de negocios de la cache
+            val cachedNegocioList = cache.loadData<List<Negocio>>(cacheKey)
 
+            if (cachedNegocioList != null && cachedNegocioList.isNotEmpty()) {
+                // Si la lista está en la cache, úsala directamente
+                negocioList.addAll(cachedNegocioList)
+
+            } else {
+                // Si no está en la cache, realiza la llamada a la API
                 val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", "Madrid")
                 negocioList.addAll(negocioListFastFood)
                 val negocioListRestBar = YelpApi().search("restaurantes,bars", "Madrid")
@@ -74,34 +87,24 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 val negocioListBake = YelpApi().search("Bakeries", "Madrid")
                 negocioList.addAll(negocioListBake)
 
+                // Guarda la lista en la cache para futuras consultas
+                cache.saveData(cacheKey, negocioList)
+            }
 
-                if (negocioList == null || negocioList.isEmpty()) {
-                    // Manejar el caso en que no se encuentren negocios
-                    return@launch
-                }
+            // Si no hay negocios en la lista, no hay nada que hacer
+            if (negocioList.isEmpty()) {
+                return@launch
+            }
 
-                // Agrega un marcador en la ubicación de cada negocio en la lista
-                negocioList.forEach { negocio ->
-                    negocio.coordinates?.let { location ->
-                        val latLng =
-                            LatLng(location.latitude.toDouble(), location.longitude.toDouble())
-                        withContext(Dispatchers.Main) {
-                            mMap.addMarker(MarkerOptions().position(latLng).title(negocio.name))
-                        }
-                    }
-                }
-            }else{
-                negocioList.forEach { negocio ->
-                    negocio.coordinates?.let { location ->
-                        val latLng =
-                            LatLng(location.latitude.toDouble(), location.longitude.toDouble())
-                        withContext(Dispatchers.Main) {
-                            mMap.addMarker(MarkerOptions().position(latLng).title(negocio.name))
-                        }
+            // Agrega un marcador en la ubicación de cada negocio en la lista
+            negocioList.forEach { negocio ->
+                negocio.coordinates?.let { location ->
+                    val latLng = LatLng(location.latitude.toDouble(), location.longitude.toDouble())
+                    withContext(Dispatchers.Main) {
+                        mMap.addMarker(MarkerOptions().position(latLng).title(negocio.name))
                     }
                 }
             }
-
 
             // Configura la cámara del mapa
             val builder = LatLngBounds.Builder()
@@ -112,15 +115,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         builder.include(latLng)
                     }
                 }
-                val bounds = builder.build()
-                val padding = 100 // ajusta el padding según tus necesidades
-                withContext(Dispatchers.Main) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
-                }
+            }
+            val bounds = builder.build()
+            val padding = 100 // ajusta el padding según tus necesidades
+            withContext(Dispatchers.Main) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
             }
         }
-
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

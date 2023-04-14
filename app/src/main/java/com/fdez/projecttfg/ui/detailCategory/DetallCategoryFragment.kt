@@ -63,7 +63,7 @@ class DetallCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView?.visibility = View.GONE
-            cargarRV()
+        cargarRV()
 
 
 
@@ -86,8 +86,7 @@ class DetallCategoryFragment : Fragment() {
 
                             adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
                                 override fun onItemClick(negocio: Negocio) {
-                                    val nombreNegocioAlias =
-                                        arguments?.getString("cadena") ?: return
+                                    val nombreNegocioAlias = negocio.alias
 
                                     val bundle = Bundle()
                                     bundle.putString("cadena", nombreNegocioAlias)
@@ -114,7 +113,7 @@ class DetallCategoryFragment : Fragment() {
 
                 adapter.setOnItemClickListener(object : OnItemClickListenerNegocio {
                     override fun onItemClick(negocio: Negocio) {
-                        val nombreNegocioAlias = arguments?.getString("cadena") ?: return
+                        val nombreNegocioAlias = negocio.alias
                         val bundle = Bundle()
                         bundle.putString("cadena", nombreNegocioAlias)
                         val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
