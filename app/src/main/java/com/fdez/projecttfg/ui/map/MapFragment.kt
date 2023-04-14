@@ -56,10 +56,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -67,15 +64,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val cacheKey = "negocioList"
             val cache = CacheManager(requireContext())
 
-            // Intenta obtener la lista de negocios de la cache
+            //Intenta obtener la lista de negocios de la cache
             val cachedNegocioList = cache.loadData<List<Negocio>>(cacheKey)
 
             if (cachedNegocioList != null && cachedNegocioList.isNotEmpty()) {
-                // Si la lista está en la cache, úsala directamente
+                //Si la lista está en la cache, úsala directamente
                 negocioList.addAll(cachedNegocioList)
 
             } else {
-                // Si no está en la cache, realiza la llamada a la API
+                //Si no está en la cache, realiza la llamada a la API
                 val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", "Madrid")
                 negocioList.addAll(negocioListFastFood)
                 val negocioListRestBar = YelpApi().search("restaurantes,bars", "Madrid")
@@ -87,16 +84,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 val negocioListBake = YelpApi().search("Bakeries", "Madrid")
                 negocioList.addAll(negocioListBake)
 
-                // Guarda la lista en la cache para futuras consultas
+                //Guarda la lista en la cache para futuras consultas
                 cache.saveData(cacheKey, negocioList)
             }
 
-            // Si no hay negocios en la lista, no hay nada que hacer
+            //Si no hay negocios en la lista, no hay nada que hacer
             if (negocioList.isEmpty()) {
                 return@launch
             }
 
-            // Agrega un marcador en la ubicación de cada negocio en la lista
+            //Agrega un marcador en la ubicación de cada negocio en la lista
             negocioList.forEach { negocio ->
                 negocio.coordinates?.let { location ->
                     val latLng = LatLng(location.latitude.toDouble(), location.longitude.toDouble())
@@ -106,7 +103,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
 
-            // Configura la cámara del mapa
+            //Configura la cámara del mapa
             val builder = LatLngBounds.Builder()
             negocioList.forEach { negocio ->
                 negocio.coordinates?.let { location ->
@@ -117,7 +114,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
             val bounds = builder.build()
-            val padding = 100 // ajusta el padding según tus necesidades
+            val padding = 100
             withContext(Dispatchers.Main) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
             }
