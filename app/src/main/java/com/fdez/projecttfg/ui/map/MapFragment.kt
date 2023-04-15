@@ -33,7 +33,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var isDataLoaded = false
 
-    private val cache = LruCache<String, List<Negocio>>(1024) // 1024 = tamaño máximo de la caché en bytes
+    private val cache = LruCache<String, List<Negocio>>(1024)
 
     private lateinit var mMap: GoogleMap
 

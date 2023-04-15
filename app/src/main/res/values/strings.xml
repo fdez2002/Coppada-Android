@@ -20,6 +20,8 @@
     <string name="tv_Web">Web</string>
     <string name="tv_Contacto">Contacto</string>
     <string name="tv_ubi">Ubicación</string>
+    <string name="fab_llamar">Llamar</string>
+    <string name="fab_web">Visitar</string>
 
     <!-- Texto imagebuttons -->
     <string name="tv_resYBar">Restaurantes y bares</string>

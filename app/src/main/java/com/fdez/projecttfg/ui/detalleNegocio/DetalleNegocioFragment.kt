@@ -1,10 +1,13 @@
 package com.fdez.projecttfg.ui.detalleNegocio
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -32,6 +35,9 @@ class DetalleNegocioFragment : Fragment() {
 
     private var googleMap: GoogleMap? = null
 
+    private var number: String? = null
+    private var web: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +51,17 @@ class DetalleNegocioFragment : Fragment() {
         binding.toolbarBackButton.setOnClickListener {
             findNavController().navigateUp()
 
+        }
+        binding.extendedFabLlmar.setOnClickListener {
+            val phoneNumber = number
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:$phoneNumber")
+            startActivity(intent)
+        }
+        binding.extendedFabWeb.setOnClickListener {
+            val url = web
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
         }
 
 
@@ -64,6 +81,7 @@ class DetalleNegocioFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val cadena = arguments?.getString("cadena")
             val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
+
             Log.d("tag", negocioDetalle.toString())
 
             if (negocioDetalle != null) {
@@ -76,8 +94,10 @@ class DetalleNegocioFragment : Fragment() {
                     binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
                     binding.tvNombreN.text = negocioDetalle.name
                     binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
-                    binding.tvPaginaWebN.text = negocioDetalle.url
-                    binding.tvContactoN.text = negocioDetalle.phone
+                    web = negocioDetalle.url
+                    //binding.tvPaginaWebN.text = negocioDetalle.url
+                    number = negocioDetalle.phone
+                    //binding.tvContactoN.text = negocioDetalle.phone
                 }
             }
 
@@ -119,6 +139,8 @@ class DetalleNegocioFragment : Fragment() {
             }
         }
     }
+
+
 
 
 
