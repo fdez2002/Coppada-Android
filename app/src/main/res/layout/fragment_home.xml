@@ -44,18 +44,21 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/koulen_regular"
+                    android:paddingStart="16dp"
                     android:text="@string/tv_bienvecida"
-                    android:textSize="34sp"
-                    app:autoSizeMaxTextSize="34sp"
+                    android:textSize="44sp"
+                    app:autoSizeMaxTextSize="44sp"
                     app:autoSizeMinTextSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:fontFamily="@font/koulen_regular"
+                    android:paddingStart="16dp"
                     android:text="@string/tv_q_desea"
                     android:textSize="20sp" />
 
