@@ -1,12 +1,11 @@
-package com.fdez.projecttfg
+package com.fdez.projecttfg.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
-import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
+import com.fdez.projecttfg.Negocio
+import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.SmallItemCardLocalesBinding
 
 class NegocioAdapterSmall(

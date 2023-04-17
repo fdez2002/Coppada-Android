@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.Negocio
-import com.fdez.projecttfg.NegocioAdapter
+import com.fdez.projecttfg.adapters.NegocioAdapter
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentDetallCategoryBinding
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

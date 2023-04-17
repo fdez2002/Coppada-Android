@@ -1,15 +1,13 @@
 package com.fdez.projecttfg.ui.map
 
-import android.nfc.Tag
 import android.os.Bundle
-import android.util.Log
 import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.fdez.projecttfg.Api.YelpApi
-import com.fdez.projecttfg.CacheManager
+import com.fdez.projecttfg.managerCache.CacheManager
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentMapBinding

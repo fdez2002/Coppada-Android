@@ -1,4 +1,4 @@
-package com.fdez.projecttfg
+package com.fdez.projecttfg.managerCache
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -16,8 +16,10 @@
             android:id="@+id/topAppBarRec"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="string/page_title"
+            app:title=""
+            app:subtitle=""
             app:titleCentered="true"
+            app:subtitleCentered="true"
             app:navigationIcon="@drawable/arrow_back_fill0_wght200_grad0_opsz24" />
 
         <ScrollView

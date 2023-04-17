@@ -6,26 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fdez.projecttfg.*
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
+import com.fdez.projecttfg.adapters.NegocioAdapter
 import com.fdez.projecttfg.databinding.FragmentHomeBinding
+import com.fdez.projecttfg.managerCache.CacheManager
 
 import com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.search.SearchView
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -97,7 +92,7 @@ class HomeFragment : Fragment() {
             navegarCategory(categoria, titulo)
         }
         binding.buttonRepDomici.setOnClickListener {
-            val categoria = "Fast Food,Burgers,Pizza"
+            val categoria = "fast food"
             val titulo = "Fast Food"
             navegarCategory(categoria, titulo)
         }

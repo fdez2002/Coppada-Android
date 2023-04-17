@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.Negocio
-import com.fdez.projecttfg.NegocioAdapter
-import com.fdez.projecttfg.NegocioAdapterSmall
+import com.fdez.projecttfg.adapters.NegocioAdapterSmall
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentResCiudadBinding
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
@@ -29,11 +28,13 @@ class ResCiudadFragment : Fragment() {
 
 
     private val binding get() = _binding!!
+
     private var negocioListBYR: List<Negocio>? = null
     private var negocioListCafeTe: List<Negocio>? = null
     private var negocioListBakeri: List<Negocio>? = null
     private var negocioListCopas: List<Negocio>? = null
     private var negocioListFatsFood: List<Negocio>? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,25 +44,33 @@ class ResCiudadFragment : Fragment() {
 
 
         _binding = FragmentResCiudadBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
+
+        bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView?.visibility = View.GONE
+
         binding.topAppBarRec.setOnClickListener {
             findNavController().navigateUp()
 
         }
 
-        mostrarResBar()
-        mostrarCafeTe()
-        mostrarBakeries()
-        mostrarCopas()
-        mostrarFastFood()
-        mostrarOil()
+        binding.topAppBarRec.title = "Lugares en"
+        binding.topAppBarRec.subtitle = arguments?.getString("ciudad")
+
+        val ciudad = arguments?.getString("ciudad")
+        mostrarResBar(ciudad)
+        mostrarCafeTe(ciudad)
+        mostrarBakeries(ciudad)
+        mostrarCopas(ciudad)
+        mostrarFastFood(ciudad)
+        mostrarOil(ciudad)
 
         return root
     }
-    private fun mostrarResBar(){
+    private fun mostrarResBar(ciudad: String?){
         CoroutineScope(Dispatchers.IO).launch {
-
-            negocioListBYR = YelpApi().search("restaurantes,bars", "Madrid")
+            negocioListBYR = YelpApi().search("restaurantes,bars", ciudad.toString())
             withContext(Dispatchers.Main) {
                 //Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvRYB
@@ -75,10 +84,10 @@ class ResCiudadFragment : Fragment() {
         }
 
     }
-    private fun mostrarCafeTe(){
+    private fun mostrarCafeTe(ciudad: String?) {
         CoroutineScope(Dispatchers.IO).launch {
 
-            negocioListCafeTe = YelpApi().search("Coffee & Tea", "Madrid")
+            negocioListCafeTe = YelpApi().search("Coffee & Tea", ciudad.toString())
             withContext(Dispatchers.Main) {
                 //Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvCafeTe
@@ -91,10 +100,10 @@ class ResCiudadFragment : Fragment() {
             }
         }
     }
-    private fun mostrarBakeries(){
+    private fun mostrarBakeries(ciudad: String?) {
         CoroutineScope(Dispatchers.IO).launch {
 
-            negocioListBakeri = YelpApi().search("Bakeries", "Madrid")
+            negocioListBakeri = YelpApi().search("Bakeries", ciudad.toString())
             withContext(Dispatchers.Main) {
                 //Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvBaker
@@ -107,10 +116,10 @@ class ResCiudadFragment : Fragment() {
             }
         }
     }
-    private fun mostrarCopas(){
+    private fun mostrarCopas(ciudad: String?) {
         CoroutineScope(Dispatchers.IO).launch {
 
-            negocioListCopas = YelpApi().search("bars", "Madrid")
+            negocioListCopas = YelpApi().search("bars", ciudad.toString())
             withContext(Dispatchers.Main) {
                 //Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvCopas
@@ -123,10 +132,10 @@ class ResCiudadFragment : Fragment() {
             }
         }
     }
-    private fun mostrarFastFood(){
+    private fun mostrarFastFood(ciudad: String?) {
         CoroutineScope(Dispatchers.IO).launch {
 
-            negocioListFatsFood = YelpApi().search("Fast Food,Burgers,Pizza", "Madrid")
+            negocioListFatsFood = YelpApi().search("fast food", ciudad.toString())
             withContext(Dispatchers.Main) {
                 //Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvFastFood
@@ -139,10 +148,10 @@ class ResCiudadFragment : Fragment() {
             }
         }
     }
-    private fun mostrarOil(){
+    private fun mostrarOil(ciudad: String?) {
         CoroutineScope(Dispatchers.IO).launch {
 
-            negocioListFatsFood = YelpApi().search("Gasolineras", "Madrid")
+            negocioListFatsFood = YelpApi().search("Gasolineras", ciudad.toString())
             withContext(Dispatchers.Main) {
                 //Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvOil
@@ -174,13 +183,6 @@ class ResCiudadFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView?.visibility = View.GONE
-
-
-    }
     companion object {
         fun newInstance(ciudad: String): ResCiudadFragment {
             val args = Bundle()
