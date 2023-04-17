@@ -73,57 +73,57 @@ class DetallCategoryFragment : Fragment() {
         // Si la lista de negocios no ha sido inicializada previamente, se obtienen los datos de la API
         if (!isDataLoaded) {
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    val cadena = arguments?.getString("category")
-                    negocioList = YelpApi().search(cadena.toString(), "Madrid")
-                    try{
-                        withContext(Dispatchers.Main) {
-                            // Configurar RecyclerView y Adapter
-                            val recyclerView = binding.rvNegocios2
-                            recyclerView.layoutManager = LinearLayoutManager(context)
-                            val adapter = negocioList?.let { NegocioAdapter(it) }
-                            recyclerView.adapter = adapter
+            CoroutineScope(Dispatchers.IO).launch {
+                val cadena = arguments?.getString("category")
+                negocioList = YelpApi().search(cadena.toString(), "Madrid")
+                try{
+                    withContext(Dispatchers.Main) {
+                        // Configurar RecyclerView y Adapter
+                        val recyclerView = binding.rvNegocios2
+                        recyclerView.layoutManager = LinearLayoutManager(context)
+                        val adapter = negocioList?.let { NegocioAdapter(it) }
+                        recyclerView.adapter = adapter
 
-                            adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
-                                override fun onItemClick(negocio: Negocio) {
-                                    val nombreNegocioAlias = negocio.alias
+                        adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
+                            override fun onItemClick(negocio: Negocio) {
+                                val nombreNegocioAlias = negocio.alias
 
-                                    val bundle = Bundle()
-                                    bundle.putString("cadena", nombreNegocioAlias)
-                                    val fragment =
-                                        DetalleNegocioFragment.newInstance(nombreNegocioAlias)
-                                    fragment.arguments = bundle
-                                    findNavController().navigate(
-                                        R.id.action_detallCategoryFragment_to_detalleNegocioFragment,
-                                        bundle
-                                    )
-                                }
-                            })
-                            isDataLoaded = true // La lista de negocios ya ha sido cargada
-                        }
-                    }catch (e:Exception){}
+                                val bundle = Bundle()
+                                bundle.putString("cadena", nombreNegocioAlias)
+                                val fragment =
+                                    DetalleNegocioFragment.newInstance(nombreNegocioAlias)
+                                fragment.arguments = bundle
+                                findNavController().navigate(
+                                    R.id.action_detallCategoryFragment_to_detalleNegocioFragment,
+                                    bundle
+                                )
+                            }
+                        })
+                        isDataLoaded = true // La lista de negocios ya ha sido cargada
+                    }
+                }catch (e:Exception){}
 
-                }
+            }
         } else {
             // Si la lista de negocios ya ha sido inicializada, se configura el RecyclerView con los datos ya cargados
             val recyclerView = binding.rvNegocios2
             recyclerView.layoutManager = LinearLayoutManager(context)
-                val adapter = NegocioAdapter(negocioList!!)
-                recyclerView.adapter = adapter
+            val adapter = NegocioAdapter(negocioList!!)
+            recyclerView.adapter = adapter
 
-                adapter.setOnItemClickListener(object : OnItemClickListenerNegocio {
-                    override fun onItemClick(negocio: Negocio) {
-                        val nombreNegocioAlias = negocio.alias
-                        val bundle = Bundle()
-                        bundle.putString("cadena", nombreNegocioAlias)
-                        val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
-                        fragment.arguments = bundle
-                        findNavController().navigate(
-                            R.id.action_detallCategoryFragment_to_detalleNegocioFragment,
-                            bundle
-                        )
-                    }
-                })
+            adapter.setOnItemClickListener(object : OnItemClickListenerNegocio {
+                override fun onItemClick(negocio: Negocio) {
+                    val nombreNegocioAlias = negocio.alias
+                    val bundle = Bundle()
+                    bundle.putString("cadena", nombreNegocioAlias)
+                    val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
+                    fragment.arguments = bundle
+                    findNavController().navigate(
+                        R.id.action_detallCategoryFragment_to_detalleNegocioFragment,
+                        bundle
+                    )
+                }
+            })
 
         }
     }

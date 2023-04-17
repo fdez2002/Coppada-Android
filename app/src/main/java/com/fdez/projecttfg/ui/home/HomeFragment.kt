@@ -1,21 +1,11 @@
 package com.fdez.projecttfg.ui.home
 
-import android.content.ContentValues.TAG
-import android.content.Context
-import android.location.Criteria
-import android.location.Geocoder
-import android.location.LocationManager
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toolbar
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +18,7 @@ import com.fdez.projecttfg.databinding.FragmentHomeBinding
 import com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.search.SearchView
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,6 +50,35 @@ class HomeFragment : Fragment() {
 
 
         cargarRV()
+
+        binding.searchview
+            .editText
+            .setOnEditorActionListener { v, actionId, event ->
+                binding.searchBar.text = binding.searchview.text
+                binding.searchview.hide()
+                false
+
+
+            }
+
+        binding.searchview.editText.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val ciudad = binding.searchview.text?.trim().toString()
+                val bundle = Bundle()
+                bundle.putString("ciudad", ciudad)
+
+                val fragment = DetalleNegocioFragment.newInstance(ciudad)
+                fragment.arguments = bundle
+                findNavController().navigate(
+                    R.id.action_navigation_home_to_resCiudadFragment,
+                    bundle
+                )
+                true
+            } else {
+                false
+            }
+        }
+
 
         binding.buttonRestaBar.setOnClickListener {
             val categoria = "restaurantes,bars"

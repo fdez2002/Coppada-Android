@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_detallCategoryFragment"
             app:destination="@id/detallCategoryFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_resCiudadFragment"
+            app:destination="@id/resCiudadFragment" />
     </fragment>
 
     <fragment
@@ -54,5 +57,14 @@
         <action
             android:id="@+id/action_detallCategoryFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/resCiudadFragment"
+        android:name="com.fdez.projecttfg.ui.resCiudad.ResCiudadFragment"
+        android:label="fragment_res_ciudad"
+        tools:layout="@layout/fragment_res_ciudad" >
+        <action
+            android:id="@+id/action_resCiudadFragment_to_detalleNegocioFragment"
+            app:destination="@id/detalleNegocioFragment" />
     </fragment>
 </navigation>

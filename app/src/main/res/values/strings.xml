@@ -14,6 +14,7 @@
     <string name="tv_bienvecida">Bienvenido</string>
     <string name="tv_q_desea">¿Que desea hacer?</string>
     <string name="secarch">Busca tu restaurante, bar…</string>
+    <string name="tv_best">Los TOP en tu ubicación</string>
 
     <!-- Texto detalle negocio -->
     <string name="tv_informacion">Información</string>
