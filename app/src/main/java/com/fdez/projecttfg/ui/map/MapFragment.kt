@@ -18,6 +18,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,6 +58,26 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        // Establecer un OnMarkerClickListener para el mapa
+        mMap.setOnMarkerClickListener { marker ->
+            // Crear y mostrar un BottomSheet personalizado con la información del marcador
+            val bottomSheetDialog = BottomSheetDialog(requireContext())
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
+            bottomSheetDialog.setContentView(view)
+            bottomSheetDialog.show()
+
+
+            // Configurar la información del marcador en el BottomSheet
+            /*
+            val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
+            val snippetTextView = view.findViewById<TextView>(R.id.snippetTextView)
+            titleTextView.text = marker.title
+            snippetTextView.text = marker.snippet
+
+             */
+
+            true
+        }
 
         CoroutineScope(Dispatchers.IO).launch {
             val cacheKey = "negocioList"
@@ -117,6 +138,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
             }
         }
+
     }
 
 
