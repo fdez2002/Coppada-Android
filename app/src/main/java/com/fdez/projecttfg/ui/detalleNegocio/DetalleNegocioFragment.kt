@@ -49,6 +49,13 @@ class DetalleNegocioFragment : Fragment() {
 
 
         binding.toolbarBackButton.setOnClickListener {
+            val navController = findNavController()
+            val currentDestination = navController.currentDestination
+
+            if (currentDestination?.id == R.id.action_navigation_home_to_detalleNegocioFragment) {
+                bottomNavigationView?.visibility = View.VISIBLE
+                bottomNavigationView = null
+            }
             findNavController().navigateUp()
 
         }
@@ -67,6 +74,7 @@ class DetalleNegocioFragment : Fragment() {
 
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -147,9 +155,6 @@ class DetalleNegocioFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        bottomNavigationView?.visibility = View.VISIBLE
-        bottomNavigationView = null
-
 
 
     }

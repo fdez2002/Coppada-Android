@@ -17,6 +17,7 @@ import com.fdez.projecttfg.managerCache.CacheManager
 
 import com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +32,9 @@ class HomeFragment : Fragment() {
     // Booleano para comprobar si la lista de negocios ya ha sido obtenida de la API
     private var isDataLoaded = false
 
+    private var bottomNavigationView: BottomNavigationView? = null
+
+
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -42,7 +46,6 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         cargarRV()
 
@@ -109,6 +112,11 @@ class HomeFragment : Fragment() {
 
         return root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     private fun navegarCategory(categoria: String, titulo: String){
         val bundle = Bundle()
         bundle.putString("category", categoria)
