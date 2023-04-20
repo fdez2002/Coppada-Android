@@ -1,11 +1,19 @@
 package com.fdez.projecttfg.ui.map
 
+import android.annotation.SuppressLint
+import android.media.Rating
 import android.os.Bundle
+import android.util.Log
 import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.managerCache.CacheManager
 import com.fdez.projecttfg.Negocio
@@ -18,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,34 +59,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
         mapFragment.getMapAsync(this@MapFragment)
+
         return root
     }
 
 
+    @SuppressLint("MissingInflatedId")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        // Establecer un OnMarkerClickListener para el mapa
-        mMap.setOnMarkerClickListener { marker ->
-            // Crear y mostrar un BottomSheet personalizado con la información del marcador
-            val bottomSheetDialog = BottomSheetDialog(requireContext())
-            val view = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
-            bottomSheetDialog.setContentView(view)
-            bottomSheetDialog.show()
-
-
-            // Configurar la información del marcador en el BottomSheet
-            /*
-            val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
-            val snippetTextView = view.findViewById<TextView>(R.id.snippetTextView)
-            titleTextView.text = marker.title
-            snippetTextView.text = marker.snippet
-
-             */
-
-            true
-        }
 
         CoroutineScope(Dispatchers.IO).launch {
             val cacheKey = "negocioList"
@@ -86,8 +79,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             //Intenta obtener la lista de negocios de la cache
             val cachedNegocioList = cache.loadData<List<Negocio>>(cacheKey)
 
-            if (cachedNegocioList != null && cachedNegocioList.isNotEmpty()) {
-                //Si la lista está en la cache, úsala directamente
+            if (!cachedNegocioList.isNullOrEmpty()) {
+                //Si la lista está en la cache se úsala directamente
                 negocioList.addAll(cachedNegocioList)
 
             } else {
@@ -137,6 +130,37 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             withContext(Dispatchers.Main) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
             }
+        }
+        // Establecer un OnMarkerClickListener para el mapa
+        mMap.setOnMarkerClickListener { marker ->
+            // Obtener el título del marcador seleccionado
+            val title = marker.title
+
+            // Obtener el negocio asociado al título del marcador
+            val selectedNegocio = negocioList.find { negocio ->
+                negocio.name == title
+            }
+
+            // Crear y mostrar un BottomSheet personalizado con la información del marcador
+            val bottomSheetDialog = BottomSheetDialog(requireContext())
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
+            bottomSheetDialog.setContentView(view)
+            bottomSheetDialog.show()
+
+            // Configurar la información del marcador en el BottomSheet
+            val titleTextView = view.findViewById<TextView>(R.id.tv_nombreBS)
+            val image = view.findViewById<ImageView>(R.id.img_negocio)
+            val ranting = view.findViewById<RatingBar>(R.id.ratingBar)
+            selectedNegocio?.let {
+                Glide.with(binding.root.context)
+                    .load(it.image_url)
+                    .into(image)
+                Toast.makeText(context, it.rating.toString(), Toast.LENGTH_LONG)
+                ranting?.rating = it.rating.toFloat()
+
+            }
+
+            true
         }
 
     }

@@ -49,17 +49,9 @@ class HomeFragment : Fragment() {
 
         cargarRV()
 
-        binding.searchview
-            .editText
-            .setOnEditorActionListener { v, actionId, event ->
-                binding.searchBar.text = binding.searchview.text
-                binding.searchview.hide()
-                false
-
-
-            }
 
         binding.searchview.editText.setOnEditorActionListener { v, actionId, event ->
+
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val ciudad = binding.searchview.text?.trim().toString()
                 val bundle = Bundle()
@@ -73,6 +65,8 @@ class HomeFragment : Fragment() {
                 )
                 true
             } else {
+                binding.searchBar.text = binding.searchview.text
+                binding.searchview.hide()
                 false
             }
         }
