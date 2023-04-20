@@ -52,7 +52,9 @@ class ResCiudadFragment : Fragment() {
         binding.topAppBarRec.setOnClickListener {
             bottomNavigationView?.visibility = View.VISIBLE
             bottomNavigationView = null
-            findNavController().navigateUp()
+            findNavController().navigate(
+                R.id.action_resCiudadFragment_to_navigation_home,
+            )
 
         }
 

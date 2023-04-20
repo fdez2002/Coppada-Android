@@ -66,5 +66,8 @@
         <action
             android:id="@+id/action_resCiudadFragment_to_detalleNegocioFragment"
             app:destination="@id/detalleNegocioFragment" />
+        <action
+            android:id="@+id/action_resCiudadFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 </navigation>
