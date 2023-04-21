@@ -1,5 +1,6 @@
 package com.fdez.projecttfg.ui.detalleNegocio
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentDetalleNegocioBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,7 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class DetalleNegocioFragment : Fragment() {
+class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentDetalleNegocioBinding? = null
     private var bottomNavigationView: BottomNavigationView? = null
 
@@ -38,6 +40,7 @@ class DetalleNegocioFragment : Fragment() {
     private var number: String? = null
     private var web: String? = null
 
+    private lateinit var mMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,11 +83,13 @@ class DetalleNegocioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView?.visibility = View.GONE
-
+/*
         val mapView = binding.mapView
         activity?.runOnUiThread {
             mapView.onCreate(savedInstanceState)
         }
+
+ */
 
         CoroutineScope(Dispatchers.IO).launch {
             val cadena = arguments?.getString("cadena")
@@ -114,7 +119,7 @@ class DetalleNegocioFragment : Fragment() {
             if (businesses != null) {
                 Log.d("tag", businesses.first.toString())
             }
-
+/*
             mapView.post {
                 mapView.getMapAsync { map ->
                     googleMap = map
@@ -145,7 +150,14 @@ class DetalleNegocioFragment : Fragment() {
                     }
                 }
             }
+            */
         }
+    }
+    @SuppressLint("MissingInflatedId")
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+
     }
 
 

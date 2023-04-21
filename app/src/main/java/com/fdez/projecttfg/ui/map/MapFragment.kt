@@ -131,23 +131,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
             }
         }
-        // Establecer un OnMarkerClickListener para el mapa
+        //Establecer un OnMarkerClickListener para el mapa
         mMap.setOnMarkerClickListener { marker ->
-            // Obtener el título del marcador seleccionado
+            //Obtener el título del marcador seleccionado
             val title = marker.title
 
-            // Obtener el negocio asociado al título del marcador
+            //Obtener el negocio asociado al título del marcador
             val selectedNegocio = negocioList.find { negocio ->
                 negocio.name == title
             }
 
-            // Crear y mostrar un BottomSheet personalizado con la información del marcador
+            //Crear y mostrar un BottomSheet personalizado con la información del marcador
             val bottomSheetDialog = BottomSheetDialog(requireContext())
             val view = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
             bottomSheetDialog.setContentView(view)
             bottomSheetDialog.show()
 
-            // Configurar la información del marcador en el BottomSheet
+            //Configurar la información del marcador en el BottomSheet
             val titleTextView = view.findViewById<TextView>(R.id.tv_nombreBS)
             val image = view.findViewById<ImageView>(R.id.img_negocio)
             val ranting = view.findViewById<RatingBar>(R.id.ratingBar)
@@ -155,7 +155,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 Glide.with(binding.root.context)
                     .load(it.image_url)
                     .into(image)
-                Toast.makeText(context, it.rating.toString(), Toast.LENGTH_LONG)
+                titleTextView.text = it.name
+                Toast.makeText(context, it.rating.toString(), Toast.LENGTH_LONG).show()
                 ranting?.rating = it.rating.toFloat()
 
             }

@@ -171,6 +171,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView?.visibility = View.VISIBLE
+
+        binding.searchview.hide()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
