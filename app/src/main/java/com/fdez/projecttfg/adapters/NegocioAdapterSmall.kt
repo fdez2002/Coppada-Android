@@ -20,9 +20,10 @@ class NegocioAdapterSmall(
         fun bind(negocio: Negocio) {
             Glide.with(binding.root.context)
                 .load(negocio.image_url)
+                .error(com.denzcoskun.imageslider.R.drawable.error)
                 .into(binding.imgNegocioS)
             binding.tvNombreS.text = negocio.name
-            binding.tvLugarS.text = negocio.coordinates!!.city
+            binding.tvLugarS.text = negocio.coordinates?.city
             if (negocio.is_closed) {
                 binding.ivIsClosed.setImageResource(R.drawable.closed);
             } else {

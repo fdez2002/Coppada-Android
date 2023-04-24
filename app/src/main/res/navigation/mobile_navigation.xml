@@ -25,7 +25,11 @@
         android:id="@+id/navigation_map"
         android:name="com.fdez.projecttfg.ui.map.MapFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_navigation_map_to_detalleNegocioFragment"
+            app:destination="@id/detalleNegocioFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite"

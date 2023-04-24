@@ -12,13 +12,16 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.managerCache.CacheManager
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentMapBinding
+import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -45,10 +48,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-
+    private var nombreNegocioAlias: String? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private var bottomNavigationView: BottomNavigationView? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -150,22 +156,42 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             //Configurar la información del marcador en el BottomSheet
             val titleTextView = view.findViewById<TextView>(R.id.tv_nombreBS)
             val image = view.findViewById<ImageView>(R.id.img_negocio)
-            val ranting = view.findViewById<RatingBar>(R.id.ratingBar)
+            val ranting = view.findViewById<RatingBar>(R.id.ratingBarBS)
+            val cardDetail = view.findViewById<CardView>(R.id.cardDetail)
             selectedNegocio?.let {
                 Glide.with(binding.root.context)
                     .load(it.image_url)
+                    .error(com.denzcoskun.imageslider.R.drawable.error)
                     .into(image)
                 titleTextView.text = it.name
-                Toast.makeText(context, it.rating.toString(), Toast.LENGTH_LONG).show()
-                ranting?.rating = it.rating.toFloat()
+                ranting.rating = it.rating.toFloat()
+                nombreNegocioAlias = it.alias
 
+            }
+            cardDetail.setOnClickListener {
+                bottomSheetDialog.dismiss()
+
+                val bundle = Bundle()
+                bundle.putString("cadena", nombreNegocioAlias)
+
+                val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias.toString())
+                fragment.arguments = bundle
+                findNavController().navigate(
+                    R.id.action_navigation_map_to_detalleNegocioFragment,
+                    bundle
+                )
             }
 
             true
         }
 
     }
+    override fun onResume() {
+        super.onResume()
+        bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView?.visibility = View.VISIBLE
 
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

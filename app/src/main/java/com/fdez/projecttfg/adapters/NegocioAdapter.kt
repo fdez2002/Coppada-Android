@@ -20,6 +20,7 @@ class NegocioAdapter(
         fun bind(negocio: Negocio) {
             Glide.with(binding.root.context)
                 .load(negocio.image_url)
+                .error(com.denzcoskun.imageslider.R.drawable.error)
                 .into(binding.imgNegocio)
             binding.tvNombre.text = negocio.name
             binding.tvLugar.text = negocio.coordinates!!.city
