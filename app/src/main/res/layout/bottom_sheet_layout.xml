@@ -93,11 +93,13 @@
                         android:layout_weight="0"
                         app:srcCompat="@drawable/closed" />
 
+
                 </LinearLayout>
 
             </LinearLayout>
 
             <!-- Buttons -->
+
 
         </LinearLayout>
 

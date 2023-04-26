@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -19,6 +17,7 @@ import com.fdez.projecttfg.databinding.FragmentDetalleNegocioBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -35,12 +34,13 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
     private val binding get() = _binding!!
 
-    private var googleMap: GoogleMap? = null
 
     private var number: String? = null
     private var web: String? = null
 
     private lateinit var mMap: GoogleMap
+
+    private var latLngBusines: LatLng? = LatLng(0.0, 0.0)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +50,9 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
         _binding = FragmentDetalleNegocioBinding.inflate(inflater, container, false)
 
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.map_viewBussis) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         binding.toolbarBackButton.setOnClickListener {
             val navController = findNavController()
@@ -83,19 +86,13 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView?.visibility = View.GONE
-/*
-        val mapView = binding.mapView
-        activity?.runOnUiThread {
-            mapView.onCreate(savedInstanceState)
-        }
 
- */
+
+
 
         CoroutineScope(Dispatchers.IO).launch {
             val cadena = arguments?.getString("cadena")
             val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
-
-            Log.d("tag", negocioDetalle.toString())
 
             if (negocioDetalle != null) {
                 withContext(Dispatchers.Main) {
@@ -111,57 +108,33 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
                     //binding.tvPaginaWebN.text = negocioDetalle.url
                     number = negocioDetalle.phone
                     //binding.tvContactoN.text = negocioDetalle.phone
+                    negocioDetalle.coordinates?.let { location ->
+                        latLngBusines =
+                            LatLng(location.latitude.toDouble(), location.longitude.toDouble())
+                        setupMap()
+                    }
+
                 }
             }
 
-            val businesses =
-                negocioDetalle?.let { YelpApi().getBusinessLocation(negocioDetalle.alias) }
-            if (businesses != null) {
-                Log.d("tag", businesses.first.toString())
-            }
-/*
-            mapView.post {
-                mapView.getMapAsync { map ->
-                    googleMap = map
-                    map.setOnMapLoadedCallback {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val location =
-                                YelpApi().getBusinessLocation(negocioDetalle?.alias ?: "")
-                            withContext(Dispatchers.Main) {
-                                if (location != null) {
-                                    val latLng =
-                                        businesses?.let { LatLng(it.first, businesses.second) }
-                                    latLng?.let {
-                                        CameraUpdateFactory.newLatLngZoom(
-                                            it,
-                                            15f
-                                        )
-                                    }?.let {
-                                        googleMap?.moveCamera(
-                                            it
-                                        )
-                                    }
-                                    latLng?.let {
-                                        MarkerOptions().position(it).title(negocioDetalle?.name)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            */
         }
+
     }
-    @SuppressLint("MissingInflatedId")
+
     override fun onMapReady(googleMap: GoogleMap) {
+        //Callback cuando el mapa esté listo para ser utilizado
         mMap = googleMap
 
-
     }
 
+    private fun setupMap() {
+        mMap?.addMarker(
+            MarkerOptions()
+                .position(latLngBusines!!)
+        )
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngBusines!!, 15.0f))
 
-
+    }
 
 
     override fun onDestroyView() {

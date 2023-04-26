@@ -138,7 +138,7 @@ class HomeFragment : Fragment() {
 
             } else {
                 //Si no está en la cache, realiza la llamada a la API
-                negocioList = YelpApi().search("pizza", "Madrid")
+                negocioList = YelpApi().search("Fast Food", "Madrid")
 
                 //Guarda la lista en la cache para futuras consultas
                 cache.saveData(cacheKey, negocioList)

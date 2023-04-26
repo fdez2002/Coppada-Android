@@ -1,9 +1,7 @@
 package com.fdez.projecttfg.ui.map
 
 import android.annotation.SuppressLint
-import android.media.Rating
 import android.os.Bundle
-import android.util.Log
 import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.fdez.projecttfg.Api.YelpApi
-import com.fdez.projecttfg.managerCache.CacheManager
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentMapBinding
+import com.fdez.projecttfg.managerCache.CacheManager
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -31,10 +28,13 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.like.LikeButton
+import com.like.OnLikeListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -158,6 +158,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val image = view.findViewById<ImageView>(R.id.img_negocio)
             val ranting = view.findViewById<RatingBar>(R.id.ratingBarBS)
             val cardDetail = view.findViewById<CardView>(R.id.cardDetail)
+
             selectedNegocio?.let {
                 Glide.with(binding.root.context)
                     .load(it.image_url)

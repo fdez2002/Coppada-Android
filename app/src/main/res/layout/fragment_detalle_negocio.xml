@@ -133,7 +133,7 @@
                 android:textStyle="bold" />
 
             <fragment
-                android:id="@+id/map_view"
+                android:id="@+id/map_viewBussis"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:name="com.google.android.gms.maps.SupportMapFragment"

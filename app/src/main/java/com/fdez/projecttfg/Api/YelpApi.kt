@@ -47,7 +47,7 @@ class YelpApi {
     suspend fun getBusinessDetails(alias: String): DetailBusiness? {
         val response = service.getNegocioDetalle(alias)
         return DetailBusiness(response.id, response.name, response.rating, response.review_count, response.location, response.phone
-            , response.photos, response.price, response.url, response.alias)
+            , response.photos, response.coordinates, response.price, response.url, response.alias)
     }
     // Nuevo método para obtener la longitud y la latitud de un negocio
     suspend fun getBusinessLocation(alias: String): Pair<Double, Double>? {

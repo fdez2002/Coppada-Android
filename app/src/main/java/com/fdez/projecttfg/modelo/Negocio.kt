@@ -37,6 +37,7 @@ data class DetailBusiness(
     val location: Location?,
     val phone: String?,
     val photos: List<String>,
+    val coordinates: Location?,
     //val hours: List<Hour>?,
     //val categories: List<Category>,
     val price: String?,
