@@ -59,9 +59,8 @@ dependencies {
 
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
 
-    implementation ('com.github.jd-alexander:LikeButton:0.2.3') {
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
