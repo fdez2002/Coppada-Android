@@ -86,12 +86,14 @@
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:textColor="?android:attr/textColorSecondary" />
 
-                    <ImageView
-                        android:id="@+id/iv_isClosedBS"
+                    <com.like.LikeButton
+                        android:id="@+id/star_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        app:srcCompat="@drawable/closed" />
+                        android:layout_gravity="end"
+                        app:anim_scale_factor="2"
+                        app:icon_size="25dp"
+                        app:icon_type="heart" />
 
 
                 </LinearLayout>

@@ -25,9 +25,9 @@ class NegocioAdapter(
             binding.tvNombre.text = negocio.name
             binding.tvLugar.text = negocio.coordinates!!.city
             if (negocio.is_closed) {
-                binding.ivIsClosed.setImageResource(R.drawable.closed);
+                //binding.ivIsClosed.setImageResource(R.drawable.closed);
             } else {
-                binding.ivIsClosed.setImageResource(R.drawable.open);
+                //binding.ivIsClosed.setImageResource(R.drawable.open);
             }
             binding.ratingBar.rating = negocio.rating.toFloat();
 

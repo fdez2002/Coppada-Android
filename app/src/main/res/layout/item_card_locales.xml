@@ -34,18 +34,15 @@
 
                 <!-- Title, secondary and supporting text -->
 
-                <ImageView
-                    android:id="@+id/like_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:src="@drawable/ic_baseline_favorite_24" />
+
 
                 <TextView
                     android:id="@+id/tv_nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Anyonio"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textSize="20sp" />
 
                 <RatingBar
                     android:id="@+id/ratingBar"
@@ -82,12 +79,14 @@
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:textColor="?android:attr/textColorSecondary" />
 
-                    <ImageView
-                        android:id="@+id/iv_isClosed"
+                    <com.like.LikeButton
+                        android:id="@+id/star_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        app:srcCompat="@drawable/closed" />
+                        android:layout_gravity="end"
+                        app:anim_scale_factor="2"
+                        app:icon_size="25dp"
+                        app:icon_type="heart" />
 
                 </LinearLayout>
 
