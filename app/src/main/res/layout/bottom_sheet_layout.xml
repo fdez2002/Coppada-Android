@@ -11,7 +11,8 @@
     android:padding="16dp"
     app:behavior_hideable="true"
     app:behavior_peekHeight="100dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:theme="@style/Animation.Design.BottomSheetDialog">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -22,13 +23,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#FFFFFF"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="16dp"
+        android:theme="@style/Theme.AppCompat.Light">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
             android:orientation="vertical">
 
             <!-- Media -->

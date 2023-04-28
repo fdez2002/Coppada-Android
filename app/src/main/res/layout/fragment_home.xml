@@ -9,7 +9,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
-        android:background="@color/md_theme_light_onSecondary"
+
         android:fitsSystemWindows="true"
         app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
@@ -23,7 +23,6 @@
             android:theme="@style/Theme.MyApplication.AppBarOverlay"
             app:contentScrim="@color/action_bar_color"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-
             app:toolbarId="@+id/toolbar">
 
 
@@ -83,7 +82,7 @@
                             android:id="@+id/search_bar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/secarch"
+                                android:contentDescription="@string/secarch"
                             android:hint="@string/secarch" />
                     </com.google.android.material.appbar.AppBarLayout>
 
