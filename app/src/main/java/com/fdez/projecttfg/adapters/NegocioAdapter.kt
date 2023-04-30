@@ -23,7 +23,7 @@ class NegocioAdapter(
                 .error(com.denzcoskun.imageslider.R.drawable.error)
                 .into(binding.imgNegocio)
             binding.tvNombre.text = negocio.name
-            binding.tvLugar.text = negocio.coordinates!!.city
+            //binding.tvLugar.text = negocio.coordinates!!.city
             if (negocio.is_closed) {
                 //binding.ivIsClosed.setImageResource(R.drawable.closed);
             } else {

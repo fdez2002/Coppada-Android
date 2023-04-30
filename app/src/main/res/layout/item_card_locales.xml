@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <!-- Media -->
@@ -28,12 +28,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp">
 
                 <!-- Title, secondary and supporting text -->
-
 
 
                 <TextView
@@ -62,33 +61,14 @@
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-
-
-                    <TextView
-                        android:id="@+id/tv_lugar"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_weight="1"
-                        android:text="Anyonio"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?android:attr/textColorSecondary" />
-
-                    <com.like.LikeButton
-                        android:id="@+id/star_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        app:anim_scale_factor="2"
-                        app:icon_size="25dp"
-                        app:icon_type="heart" />
-
-                </LinearLayout>
+                <com.like.LikeButton
+                    android:id="@+id/star_button"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    app:anim_scale_factor="10"
+                    app:icon_size="10dp"
+                    app:icon_type="heart" />
 
             </LinearLayout>
 
