@@ -2,7 +2,7 @@
     <string name="appbar_hideable_behavior">com.google.android.material.appbar.AppBarLayout$Behavior</string>
 
 
-    <string name="app_name">ProjectTFG</string>
+    <string name="app_name">Coppada</string>
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
     <string name="title_favorites">Favoritos</string>
