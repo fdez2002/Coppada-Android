@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "153754001710",
+    "project_id": "coppada-7cd8b",
+    "storage_bucket": "coppada-7cd8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153754001710:android:c9919d82a89c4451491abf",
+        "android_client_info": {
+          "package_name": "com.fdez.projecttfg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153754001710-t3mqq2vunuf4rn4edfhu342vjd4sgn9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnMZfsxJTFdoxZY7GgQrjPeEmSMHs4yXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153754001710-t3mqq2vunuf4rn4edfhu342vjd4sgn9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

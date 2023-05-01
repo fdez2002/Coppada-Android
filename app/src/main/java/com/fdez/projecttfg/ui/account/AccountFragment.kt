@@ -8,11 +8,7 @@ import androidx.fragment.app.Fragment
 
 import com.fdez.projecttfg.databinding.FragmentAccountBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AccountFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null
 

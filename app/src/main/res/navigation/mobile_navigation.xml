@@ -74,4 +74,9 @@
             android:id="@+id/action_resCiudadFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.fdez.projecttfg.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
