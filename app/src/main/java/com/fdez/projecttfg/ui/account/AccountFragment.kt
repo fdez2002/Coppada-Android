@@ -64,7 +64,7 @@ class AccountFragment : Fragment() {
         return root
     }
     private fun activarIniciosesion(){
-        binding.buttonCamContra.isVisible = false
+       //binding.buttonCamContra.isVisible = false
         binding.buttonCerrarSesi.isVisible = false
         binding.tiResg.isVisible = false
 
@@ -73,7 +73,7 @@ class AccountFragment : Fragment() {
         binding.tiContrase.isVisible = true
     }
     private fun desacticarInicioSesion(){
-        binding.buttonCamContra.isVisible = true
+       //binding.buttonCamContra.isVisible = true
         binding.buttonCerrarSesi.isVisible = true
         binding.tiResg.isVisible = true
 
@@ -132,7 +132,7 @@ class AccountFragment : Fragment() {
                         //El inicio de sesión ha sido exitoso
                         detectarLoginUser()
                     } else {
-                        Toast.makeText(requireContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Usuario no registrado o datos incorrectos", Toast.LENGTH_SHORT).show()
                         //El inicio de sesión ha fallado
                     }
                 }
