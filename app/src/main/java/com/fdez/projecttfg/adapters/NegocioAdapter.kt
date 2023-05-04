@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
+import com.fdez.projecttfg.DetailBusiness
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
 import com.google.android.gms.tasks.OnFailureListener
@@ -28,6 +29,8 @@ class NegocioAdapter(
     RecyclerView.Adapter<NegocioAdapter.NegocioViewHolder>() {
     private var firebaseFireStore: FirebaseFirestore? = null
 
+    private val db = Firebase.firestore
+    private val offersCollection = db.collection("likes")
 
     inner class NegocioViewHolder(private val binding: ItemCardLocalesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -58,11 +61,10 @@ class NegocioAdapter(
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
                     val alias = negocio.alias // Aquí debes usar el alias que el usuario haya ingresado
 
-                    val db = Firebase.firestore
-                    val offersCollection = db.collection("likes")
                     val offer = hashMapOf(
                         "id_user" to userId.toString(),
-                        "alias" to alias
+                        "alias" to alias,
+                        "liked" to "true"
                     )
                     offersCollection.add(offer)
                         .addOnSuccessListener {
@@ -76,29 +78,51 @@ class NegocioAdapter(
 
                 }
                 override fun unLiked(likeButton: LikeButton) {
+                    // Elimina el documento de la colección "likes" que corresponde a este usuario y a este negocio
+                    val alias = negocio.alias
+                    val userId = FirebaseAuth.getInstance().currentUser?.uid
+                    val query = offersCollection.whereEqualTo("id_user", userId).whereEqualTo("alias", alias)
+                    query.get().addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            document.reference.delete()
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Documento eliminado correctamente")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w(TAG, "Error al eliminar el documento", e)
+                                }
+                        }
+                    }.addOnFailureListener { exception ->
+                        Log.w(TAG, "Error al obtener el documento: ", exception)
+                    }
+
+
 
                 }
             })
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            val alias = negocio.alias //Aquí debes usar el alias que el usuario haya ingresado
+
+            val query = offersCollection
+                .whereEqualTo("id_user", userId.toString())
+                .whereEqualTo("alias", alias)
+
+            query.get().addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val liked = document.getString("liked")
+                    if (liked != null && liked == "true" && alias == negocio.alias) {
+                        binding.likeButton.isLiked =
+                            true
+                    } //Actualiza el estado del botón de "me gusta" en la pantalla
+                }
+            }.addOnFailureListener { exception ->
+                Log.w(TAG, "Error al obtener el documento: ", exception)
+            }
+
         }
 
     }
 
-    private fun postMascota(name: String, edad: String, color: String) {
-        //apuntamos a la base de datos
-        firebaseFireStore = FirebaseFirestore.getInstance()
-        //insertamos los datos en la base de datos
-        val map: MutableMap<String, Any> = HashMap()
-        map["nombre"] = name
-        map["edad"] = edad
-        map["color"] = color
-        firebaseFireStore!!.collection("mascotas").add(map).addOnSuccessListener {
-            // si va todo bien se ejecuta
-        }.addOnFailureListener {
-            // si hay algun error se iría a este método
-            Log.d("subida", "FALLO")
-        }
-
-    }
 
     fun setOnItemClickListener(listener: OnItemClickListenerNegocio) {
         this.listener = listener
@@ -112,6 +136,7 @@ class NegocioAdapter(
 
     override fun onBindViewHolder(holder: NegocioViewHolder, position: Int) {
         holder.bind(negocios[position])
+
     }
 
     override fun getItemCount(): Int = negocios.size

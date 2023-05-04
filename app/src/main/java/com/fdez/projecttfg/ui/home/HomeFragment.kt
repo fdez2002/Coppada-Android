@@ -17,7 +17,6 @@ import com.fdez.projecttfg.managerCache.CacheManager
 import com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

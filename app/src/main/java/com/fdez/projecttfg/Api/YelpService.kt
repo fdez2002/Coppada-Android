@@ -19,4 +19,5 @@ interface YelpService {
     @GET("businesses/{alias}")
     suspend fun getNegocioDetalle(@Path("alias") alias: String): DetailBusiness
 
+
 }

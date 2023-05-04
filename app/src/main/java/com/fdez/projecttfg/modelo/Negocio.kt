@@ -14,7 +14,8 @@ data class Negocio(
     val coordinates: Location?,
     val rating: Double,
     val review_count: Int,
-    val alias: String
+    val alias: String,
+
 
 )
 data class Location(
@@ -40,8 +41,10 @@ data class DetailBusiness(
     val coordinates: Location?,
     //val hours: List<Hour>?,
     //val categories: List<Category>,
+    val is_closed: Boolean,
     val price: String?,
     val url: String,
+    val image_url: String,
     val alias: String
 )
 
