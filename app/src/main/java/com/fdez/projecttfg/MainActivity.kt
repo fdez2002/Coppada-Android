@@ -11,6 +11,7 @@ import com.fdez.projecttfg.databinding.ActivityMainBinding
 import android.os.AsyncTask
 import android.util.Log
 import com.fdez.projecttfg.Api.YelpApi
+import com.google.firebase.FirebaseApp
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseApp.initializeApp(this);
 
 
         val navView: BottomNavigationView = binding.bottomNavigation

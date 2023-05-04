@@ -14,10 +14,11 @@ import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.adapters.NegocioAdapter
 import com.fdez.projecttfg.databinding.FragmentHomeBinding
 import com.fdez.projecttfg.managerCache.CacheManager
-
 import com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.like.LikeButton
+import com.like.OnLikeListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,6 +49,8 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         cargarRV()
+
+
 
 
         binding.searchview.editText.setOnEditorActionListener { v, actionId, event ->
@@ -139,11 +142,11 @@ class HomeFragment : Fragment() {
             } else {
                 //Si no está en la cache, realiza la llamada a la API
                 negocioList = YelpApi().search("Fast Food", "Madrid")
-
                 //Guarda la lista en la cache para futuras consultas
                 cache.saveData(cacheKey, negocioList)
                 isDataLoaded = true // La lista de negocios ya ha sido cargada
             }
+            //Log.d(tag, negocioList.toString())
 
             withContext(Dispatchers.Main) {
                 //Configurar RecyclerView y Adapter

@@ -37,8 +37,10 @@
                     android:id="@+id/tv_nombreS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/koulen_regular"
                     android:text="Anyonio"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textSize="24sp" />
 
                 <RatingBar
                     android:id="@+id/ratingBarS"
@@ -50,16 +52,8 @@
                     android:progressTint="#FFC107"
                     android:rating="2.5" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="&quot;Anyonio&quot;"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary" />
-
                 <com.like.LikeButton
-                    android:id="@+id/star_button"
+                    android:id="@+id/like_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
