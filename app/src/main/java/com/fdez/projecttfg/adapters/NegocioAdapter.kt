@@ -14,6 +14,7 @@ import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -28,6 +29,7 @@ class NegocioAdapter(
 ) :
     RecyclerView.Adapter<NegocioAdapter.NegocioViewHolder>() {
     private var firebaseFireStore: FirebaseFirestore? = null
+    private lateinit var auth: FirebaseAuth
 
     private val db = Firebase.firestore
     private val offersCollection = db.collection("likes")
@@ -60,19 +62,23 @@ class NegocioAdapter(
                     //Guarda el alias del usuario en la base de datos
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
                     val alias = negocio.alias // Aquí debes usar el alias que el usuario haya ingresado
-
-                    val offer = hashMapOf(
-                        "id_user" to userId.toString(),
-                        "alias" to alias,
-                        "liked" to "true"
-                    )
-                    offersCollection.add(offer)
-                        .addOnSuccessListener {
-                            Log.d(TAG, "Documento agregado con ID: \${documentReference.id}")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w(TAG, "Error al agregar el documento", e)
-                        }
+                    if(userId != null ) {
+                        val offer = hashMapOf(
+                            "id_user" to userId.toString(),
+                            "alias" to alias,
+                            "liked" to "true"
+                        )
+                        offersCollection.add(offer)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "Documento agregado con ID: \${documentReference.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error al agregar el documento", e)
+                            }
+                    }else{
+                        binding.likeButton.isLiked =
+                            false
+                    }
 
 
 
@@ -110,9 +116,13 @@ class NegocioAdapter(
             query.get().addOnSuccessListener { documents ->
                 for (document in documents) {
                     val liked = document.getString("liked")
+
                     if (liked != null && liked == "true" && alias == negocio.alias) {
                         binding.likeButton.isLiked =
                             true
+                    }else{
+                        binding.likeButton.isLiked =
+                            false
                     } //Actualiza el estado del botón de "me gusta" en la pantalla
                 }
             }.addOnFailureListener { exception ->
