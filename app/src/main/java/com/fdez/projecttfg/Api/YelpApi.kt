@@ -44,7 +44,7 @@ class YelpApi {
         }
 
     }
-    suspend fun getAlias(alias: String): Negocio? {
+    suspend fun getAlias(alias: String): Negocio {
         val response = service.getNegocioDetalle(alias)
         return Negocio( response.image_url, response.is_closed, response.name,
             response.coordinates, response.rating, response.review_count, response.alias)

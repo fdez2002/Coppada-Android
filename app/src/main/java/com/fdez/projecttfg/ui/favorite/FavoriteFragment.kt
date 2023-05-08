@@ -1,17 +1,24 @@
 package com.fdez.projecttfg.ui.favorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.Negocio
+import com.fdez.projecttfg.R
 import com.fdez.projecttfg.adapters.NegocioAdapter
 import com.fdez.projecttfg.databinding.FragmentFavoriteBinding
+import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,49 +50,65 @@ class FavoriteFragment : Fragment() {
 
         val db = FirebaseFirestore.getInstance()
 
-        val likesCollection = db.collection("likes")
 
-        val query = likesCollection.whereEqualTo("id_user", auth?.uid)
-        query.get().addOnSuccessListener { documents ->
-            val recyclerView = binding.rvLikes
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-            requireActivity().runOnUiThread {
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            // Manejar la excepción de manera adecuada, por ejemplo, imprimir el mensaje de error
+            Log.e(tag, "Excepción en la corutina: $exception")
+        }
 
-                for (document in documents) {
-                    val alias = document.get("alias")
-                    CoroutineScope(Dispatchers.IO).launch {
-                        recyclerView.layoutManager = LinearLayoutManager(context)
-                        val yelpApi = YelpApi()
+        if (userId != null) {
+            val offersCollection = FirebaseFirestore.getInstance().collection("likes")
+            val negocioList = mutableListOf<Negocio>()
 
-                        //Obtener los detalles del negocio por su alias
-                        val negocioDetalle = yelpApi.getAlias(alias as String)
+            offersCollection
+                .whereEqualTo("id_user", userId)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val alias = document.getString("alias")
+                        if (alias != null) {
+                            // Aquí puedes utilizar el valor del alias obtenido
+                            CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+                                val negocio = YelpApi().getAlias(alias)
+                                negocioList.add(negocio)
+                                //Toast.makeText(requireContext(), alias, Toast.LENGTH_SHORT).show()
+                                withContext(Dispatchers.Main) {
+                                    //Configurar RecyclerView y Adapter
+                                    val recyclerView = binding.rvLikes
+                                    recyclerView.layoutManager = LinearLayoutManager(context)
+                                    val adapter = negocioList?.let { NegocioAdapter(it) }
+                                    recyclerView.adapter = adapter
 
-                        //Crear una lista con un solo elemento (el negocio obtenido)
-                        negocioList = mutableListOf<Negocio>()
-                        //negocioList.add(negocioDetalle)
-                        negocioDetalle?.let {
-                            (negocioList as MutableList<Negocio>).add(
-                                Negocio(
-                                    it.image_url, it.is_closed,
-                                    it.name, it.coordinates, it.rating,
-                                    it.review_count, it.alias
-                                )
-                            )
-                        }
+                                    adapter?.setOnItemClickListener(object :
+                                        OnItemClickListenerNegocio {
+                                        override fun onItemClick(negocio: Negocio) {
+                                            val nombreNegocioAlias = negocio.alias ?: return
 
-                        withContext(Dispatchers.Main) {
+                                            val bundle = Bundle()
+                                            bundle.putString("cadena", nombreNegocioAlias)
 
+                                            val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
+                                            fragment.arguments = bundle
+                                            findNavController().navigate(
+                                                R.id.action_navigation_home_to_detalleNegocioFragment,
+                                                bundle
+                                            )
+                                        }
+                                    })
+                                }
+                            }
                         }
                     }
                 }
-                //Configurar el RecyclerView y el adapter con la lista de negocios
-                val adapter = NegocioAdapter(negocioList as MutableList<Negocio>)
-                recyclerView.adapter = adapter
-
-            }
-        }.addOnFailureListener { exception ->
-            //Aquí puedes manejar el error
+                .addOnFailureListener { exception ->
+                    // Manejar la falla de la obtención de los documentos
+                    Log.d(tag, exception.toString())
+                }
         }
+
+
 
 
 

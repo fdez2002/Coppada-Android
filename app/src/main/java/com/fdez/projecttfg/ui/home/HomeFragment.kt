@@ -126,6 +126,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun cargarRV() {
+
         val cacheKey = "negocioListFavo"
         val cache = CacheManager(requireContext())
 

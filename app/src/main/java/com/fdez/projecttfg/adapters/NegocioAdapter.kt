@@ -115,7 +115,7 @@ class NegocioAdapter(
 
             query.get().addOnSuccessListener { documents ->
                 for (document in documents) {
-                    val liked = document.getString("likes")
+                    val liked = document.getString("liked")
 
                     if (liked != null && liked == "true" && alias == negocio.alias) {
                         binding.likeButton.isLiked =
