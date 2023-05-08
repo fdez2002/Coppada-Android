@@ -82,7 +82,7 @@
                             android:id="@+id/search_bar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                                android:contentDescription="@string/secarch"
+                            android:contentDescription="@string/secarch"
                             android:hint="@string/secarch" />
                     </com.google.android.material.appbar.AppBarLayout>
 
@@ -250,24 +250,40 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/ln"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_negocios"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_scrollFlags="scroll"
-            tools:listitem="@layout/item_card_locales">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_recomenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/koulen_regular"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:text="@string/tv_recomendados"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_negocios"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_scrollFlags="scroll"
+                tools:listitem="@layout/item_card_locales">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

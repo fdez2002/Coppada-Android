@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="appbar_hideable_behavior">com.google.android.material.appbar.AppBarLayout$Behavior</string>
 
 
@@ -35,6 +35,6 @@
 
 
     <string name="tv_fav">Tus favoritos</string>
-
+    <string name="tv_recomendados">¿Te apetece?</string>
 
 </resources>
