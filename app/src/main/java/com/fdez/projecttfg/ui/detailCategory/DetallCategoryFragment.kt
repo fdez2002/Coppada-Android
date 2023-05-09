@@ -132,8 +132,8 @@ class DetallCategoryFragment : Fragment() {
         super.onDestroyView()
         try {
             _binding = null
-            bottomNavigationView?.visibility = View.VISIBLE
-            bottomNavigationView = null
+            //bottomNavigationView?.visibility = View.VISIBLE
+            //bottomNavigationView = null
         } catch (e: Exception) {}
     }
 
