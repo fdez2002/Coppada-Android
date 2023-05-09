@@ -35,7 +35,11 @@
         android:id="@+id/navigation_favorite"
         android:name="com.fdez.projecttfg.ui.favorite.FavoriteFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_navigation_favorite_to_detalleNegocioFragment"
+            app:destination="@id/detalleNegocioFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_account"
         android:name="com.fdez.projecttfg.ui.account.AccountFragment"

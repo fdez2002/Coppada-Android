@@ -16,6 +16,7 @@ import com.fdez.projecttfg.R
 import com.fdez.projecttfg.adapters.NegocioAdapter
 import com.fdez.projecttfg.databinding.FragmentFavoriteBinding
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -34,6 +35,7 @@ class FavoriteFragment : Fragment() {
     private val firebase: FirebaseFirestore? = null
     private var auth: FirebaseAuth? = null
     private var negocioList: List<Negocio>? = null
+    private var bottomNavigationView: BottomNavigationView? = null
 
 
     override fun onCreateView(
@@ -92,7 +94,7 @@ class FavoriteFragment : Fragment() {
                                             val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
                                             fragment.arguments = bundle
                                             findNavController().navigate(
-                                                R.id.action_navigation_home_to_detalleNegocioFragment,
+                                                R.id.action_navigation_favorite_to_detalleNegocioFragment,
                                                 bundle
                                             )
                                         }
@@ -114,6 +116,13 @@ class FavoriteFragment : Fragment() {
 
         return root
     }
+    override fun onResume() {
+        super.onResume()
+        bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView?.visibility = View.VISIBLE
+
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
