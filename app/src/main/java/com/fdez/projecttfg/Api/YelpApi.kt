@@ -1,15 +1,12 @@
 package com.fdez.projecttfg.Api
 
-import android.location.Geocoder
 import com.fdez.projecttfg.DetailBusiness
-import com.fdez.projecttfg.MyApp
 import com.fdez.projecttfg.Negocio
-import com.google.gson.Gson
+import com.fdez.projecttfg.Review
+import com.fdez.projecttfg.Reviews
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
-import java.util.*
 
 class YelpApi {
     companion object {
@@ -54,6 +51,15 @@ class YelpApi {
         return DetailBusiness(response.id, response.name, response.rating, response.review_count, response.location, response.phone
             , response.photos, response.coordinates, response.is_closed, response.price, response.url, response.image_url, response.alias)
     }
+
+    suspend fun getBusinessReviews(alias: String): List<Review> {
+        val response = service.getNegocioReviews(alias)
+        return response.review.map { review ->
+            Review(review.url, review.text, review.user, review.rating)
+        }
+    }
+
+
 
 
 /*

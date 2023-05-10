@@ -157,6 +157,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val image = view.findViewById<ImageView>(R.id.img_negocio)
             val ranting = view.findViewById<RatingBar>(R.id.ratingBarBS)
             val cardDetail = view.findViewById<CardView>(R.id.cardDetail)
+            val tvreviewcountBT = view.findViewById<TextView>(R.id.tv_review_countBT)
 
             selectedNegocio?.let {
                 Glide.with(binding.root.context)
@@ -164,6 +165,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     .error(com.denzcoskun.imageslider.R.drawable.error)
                     .into(image)
                 titleTextView.text = it.name
+                tvreviewcountBT.text = it.review_count.toString()
+
                 ranting.rating = it.rating.toFloat()
                 nombreNegocioAlias = it.alias
 

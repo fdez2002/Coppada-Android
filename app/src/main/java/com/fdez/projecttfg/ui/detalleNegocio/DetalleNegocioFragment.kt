@@ -12,8 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.fdez.projecttfg.Api.YelpApi
+import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
+import com.fdez.projecttfg.Review
 import com.fdez.projecttfg.databinding.FragmentDetalleNegocioBinding
+import com.fdez.projecttfg.databinding.FragmentHomeBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -28,12 +31,12 @@ import kotlinx.coroutines.withContext
 
 
 class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
-    private var _binding: FragmentDetalleNegocioBinding? = null
     private var bottomNavigationView: BottomNavigationView? = null
 
-
+    private var _binding: FragmentDetalleNegocioBinding? = null
     private val binding get() = _binding!!
 
+    private var negocioReviwsList: List<Review>? = null
 
     private var number: String? = null
     private var web: String? = null
@@ -49,10 +52,15 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     ): View {
 
         _binding = FragmentDetalleNegocioBinding.inflate(inflater, container, false)
+        try {
+            val mapFragment =
+                childFragmentManager.findFragmentById(R.id.map_viewBussis) as SupportMapFragment
+            mapFragment.getMapAsync(this)
+        }catch (ex: Exception){
+            Log.d(tag, ex.toString())
+        }
 
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.map_viewBussis) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        cargarDatos()
 
         binding.toolbarBackButton.setOnClickListener {
             val navController = findNavController()
@@ -80,6 +88,50 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
         return binding.root
     }
+    private fun cargarDatos(){
+        val cadena = arguments?.getString("cadena")
+        Log.d(tag, cadena.toString())
+        CoroutineScope(Dispatchers.IO).launch {
+            negocioReviwsList = YelpApi().getBusinessReviews(cadena.toString())
+            Log.d(tag, negocioReviwsList.toString())
+        }
+
+
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
+
+
+                if (negocioDetalle != null) {
+                    withContext(Dispatchers.Main) {
+                        val imageList = ArrayList<SlideModel>() // Create image list
+                        for (photoUrl in negocioDetalle.photos) {
+                            val slideModel = SlideModel(photoUrl)
+                            imageList.add(slideModel)
+                        }
+                        binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
+                        binding.tvNombreN.text = negocioDetalle.name
+                        binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
+                        web = negocioDetalle.url
+                        //binding.tvPaginaWebN.text = negocioDetalle.url
+                        number = negocioDetalle.phone
+                        //binding.tvContactoN.text = negocioDetalle.phone
+                        negocioDetalle.coordinates?.let { location ->
+                            latLngBusines =
+                                LatLng(location.latitude.toDouble(), location.longitude.toDouble())
+                            setupMap()
+                        }
+
+                    }
+                }
+
+            }
+        }catch (ex: Exception){
+            Log.d(tag, ex.toString())
+        }
+
+
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,37 +139,6 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
         bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView?.visibility = View.GONE
 
-
-
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val cadena = arguments?.getString("cadena")
-            val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
-
-            if (negocioDetalle != null) {
-                withContext(Dispatchers.Main) {
-                    val imageList = ArrayList<SlideModel>() // Create image list
-                    for (photoUrl in negocioDetalle.photos) {
-                        val slideModel = SlideModel(photoUrl)
-                        imageList.add(slideModel)
-                    }
-                    binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
-                    binding.tvNombreN.text = negocioDetalle.name
-                    binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
-                    web = negocioDetalle.url
-                    //binding.tvPaginaWebN.text = negocioDetalle.url
-                    number = negocioDetalle.phone
-                    //binding.tvContactoN.text = negocioDetalle.phone
-                    negocioDetalle.coordinates?.let { location ->
-                        latLngBusines =
-                            LatLng(location.latitude.toDouble(), location.longitude.toDouble())
-                        setupMap()
-                    }
-
-                }
-            }
-
-        }
 
     }
 
@@ -128,12 +149,16 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setupMap() {
-        mMap?.addMarker(
-            MarkerOptions()
-                .position(latLngBusines!!)
-        )
-        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngBusines!!, 15.0f))
+        try {
+            mMap?.addMarker(
+                MarkerOptions()
+                    .position(latLngBusines!!)
+            )
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngBusines!!, 15.0f))
 
+        }catch (ex: Exception){
+            Log.d(tag, ex.toString())
+        }
     }
 
 

@@ -46,9 +46,11 @@ class DetallCategoryFragment : Fragment() {
         _binding = FragmentDetallCategoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
         val titulo = arguments?.getString("titulo")
         binding.topAppBar.title = titulo
 
+        cargarRV()
 
         binding.topAppBar.setOnClickListener {
             findNavController().navigateUp()
@@ -62,7 +64,6 @@ class DetallCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView?.visibility = View.GONE
-        cargarRV()
 
 
 

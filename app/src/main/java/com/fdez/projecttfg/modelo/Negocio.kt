@@ -45,6 +45,23 @@ data class DetailBusiness(
     val price: String?,
     val url: String,
     val image_url: String,
-    val alias: String
+    val alias: String,
+    //val reviews: List<Review>
+
+)
+data class Reviews(
+    val review: List<Review>,
+    val rating: Double
+
+)
+data class Review(
+    val url: String,
+    val text: String,
+    val user: User,
+    val rating: Double
+)
+data class User(
+    val image_url: String,
+    val name: String
 )
 
