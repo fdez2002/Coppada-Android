@@ -1,5 +1,7 @@
 package com.fdez.projecttfg.ui.account
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -202,9 +204,20 @@ class AccountFragment : Fragment() {
                             }
                         }
                 } else {
-                    Toast.makeText(requireContext(), "Error al registrar el usuario, puede que ya exista", Toast.LENGTH_SHORT).show()
+                    showAlert(requireContext(), "", "Error, puede que el correo ya exista o que los campos sean incorrectos.")
+
                 }
             }
+    }
+    //Función para mostrar el AlertDialog
+    fun showAlert(context: Context, title: String, message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("ok") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun correoVerificacion(){
@@ -213,7 +226,7 @@ class AccountFragment : Fragment() {
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     //El correo de verificación ha sido enviado exitosamente
-                    Toast.makeText(requireContext(), "Se ha enviado un correo de verificación a $email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Se ha enviado un correo de verificación", Toast.LENGTH_SHORT).show()
                 } else {
                     //Ha ocurrido un error al enviar el correo de verificación
                     Toast.makeText(requireContext(), "Error al enviar el correo de verificación", Toast.LENGTH_SHORT).show()
