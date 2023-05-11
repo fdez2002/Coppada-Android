@@ -3,7 +3,6 @@ package com.fdez.projecttfg.Api
 import com.fdez.projecttfg.DetailBusiness
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.Review
-import com.fdez.projecttfg.Reviews
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -54,8 +53,8 @@ class YelpApi {
 
     suspend fun getBusinessReviews(alias: String): List<Review> {
         val response = service.getNegocioReviews(alias)
-        return response.review.map { review ->
-            Review(review.url, review.text, review.user, review.rating)
+        return response.reviews.map { reviews ->
+            Review(reviews.url, reviews.text, reviews.user, reviews.rating)
         }
     }
 

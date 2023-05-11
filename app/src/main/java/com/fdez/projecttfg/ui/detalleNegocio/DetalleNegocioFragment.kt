@@ -36,7 +36,7 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentDetalleNegocioBinding? = null
     private val binding get() = _binding!!
 
-    private var negocioReviwsList: List<Review>? = null
+    private lateinit var negocioReviwsList: List<Review>
 
     private var number: String? = null
     private var web: String? = null
@@ -92,8 +92,8 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
         val cadena = arguments?.getString("cadena")
         //Log.d(tag, cadena.toString())
         CoroutineScope(Dispatchers.IO).launch {
-            //negocioReviwsList = YelpApi().getBusinessReviews(cadena.toString())
-            //Log.d(tag, negocioReviwsList.toString())
+            negocioReviwsList = YelpApi().getBusinessReviews(cadena.toString())
+            Log.d(tag, negocioReviwsList.toString())
         }
 
 

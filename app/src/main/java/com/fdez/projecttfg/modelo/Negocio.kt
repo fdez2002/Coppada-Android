@@ -49,8 +49,8 @@ data class DetailBusiness(
     //val reviews: List<Review>
 
 )
-data class Reviews(
-    val review: List<Review>,
+data class ReviewResponse(
+    val reviews: List<Review>,
     val rating: Double
 
 )
