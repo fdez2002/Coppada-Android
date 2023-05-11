@@ -5,251 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-
-        android:fitsSystemWindows="true"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_appbar"
-            android:fitsSystemWindows="true"
-            android:theme="@style/Theme.MyApplication.AppBarOverlay"
-            app:contentScrim="@color/action_bar_color"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:toolbarId="@+id/toolbar">
-
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/Theme.MyApplication.PopupOverlay" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp"
-                app:layout_collapseMode="parallax">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/koulen_regular"
-                    android:paddingStart="16dp"
-                    android:text="@string/tv_bienvecida"
-                    android:textSize="44sp"
-                    app:autoSizeMaxTextSize="44sp"
-                    app:autoSizeMinTextSize="20sp" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/koulen_regular"
-                    android:paddingStart="16dp"
-                    android:text="@string/tv_q_desea"
-                    android:textSize="20sp" />
-
-                <androidx.coordinatorlayout.widget.CoordinatorLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="132dp">
-
-                    <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/tv_q_desea"
-                        app:layout_behavior="@string/searchbar_scrolling_view_behavior">
-                        <!-- Screen content goes here. -->
-                    </androidx.core.widget.NestedScrollView>
-
-                    <com.google.android.material.appbar.AppBarLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.search.SearchBar
-                            android:id="@+id/search_bar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@string/secarch"
-                            android:hint="@string/secarch" />
-                    </com.google.android.material.appbar.AppBarLayout>
-
-                    <com.google.android.material.search.SearchView
-                        android:id="@+id/searchview"
-                        android:layout_width="match_parent"
-                        android:layout_height="131dp"
-                        app:layout_anchor="@id/search_bar">
-                        <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
-                    </com.google.android.material.search.SearchView>
-                </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/buttonRestaBar"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/forma_redondeada"
-                            android:src="@drawable/restaurant_fill1_wght100_grad0_opsz48" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/tv_resYBar" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/buttonCafeTe"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/forma_redondeada"
-                            android:src="@drawable/local_cafe_fill1_wght100_grad0_opsz48" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/tv_cafeyter" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/buttonCopas"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/forma_redondeada"
-                            android:src="@drawable/nightlife_fill1_wght100_grad0_opsz48" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tv_copas" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/buttonRepDomici"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/forma_redondeada"
-                            android:src="@drawable/food_bank_fill1_wght100_grad0_opsz48" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/tv_respaDomi" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/buttonOil"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/forma_redondeada"
-                            android:src="@drawable/local_gas_station_fill1_wght100_grad200_opsz48" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/tv_gasoli" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/buttonPasteleri"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/forma_redondeada"
-                            android:src="@drawable/cake_fill1_wght100_grad200_opsz48" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/tv_rpaste" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -260,6 +15,251 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/app_bar_height"
+
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/toolbar_layout"
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_appbar"
+                    android:fitsSystemWindows="true"
+                    android:theme="@style/Theme.MyApplication.AppBarOverlay"
+                    app:contentScrim="@color/action_bar_color"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                    app:toolbarId="@+id/toolbar">
+
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/Theme.MyApplication.PopupOverlay" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_collapseMode="parallax">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/koulen_regular"
+                            android:paddingStart="16dp"
+                            android:text="@string/tv_bienvecida"
+                            android:textSize="44sp"
+                            app:autoSizeMaxTextSize="44sp"
+                            app:autoSizeMinTextSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/koulen_regular"
+                            android:paddingStart="16dp"
+                            android:text="@string/tv_q_desea"
+                            android:textSize="20sp" />
+
+                        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="132dp">
+
+                            <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
+                            <androidx.core.widget.NestedScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/tv_q_desea"
+                                app:layout_behavior="@string/searchbar_scrolling_view_behavior">
+                                <!-- Screen content goes here. -->
+                            </androidx.core.widget.NestedScrollView>
+
+                            <com.google.android.material.appbar.AppBarLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.search.SearchBar
+                                    android:id="@+id/search_bar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/secarch"
+                                    android:hint="@string/secarch" />
+                            </com.google.android.material.appbar.AppBarLayout>
+
+                            <com.google.android.material.search.SearchView
+                                android:id="@+id/searchview"
+                                android:layout_width="match_parent"
+                                android:layout_height="131dp"
+                                app:layout_anchor="@id/search_bar">
+                                <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+                            </com.google.android.material.search.SearchView>
+                        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="5dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/buttonRestaBar"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/forma_redondeada"
+                                    android:src="@drawable/restaurant_fill1_wght100_grad0_opsz48" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/tv_resYBar" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/buttonCafeTe"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/forma_redondeada"
+                                    android:src="@drawable/local_cafe_fill1_wght100_grad0_opsz48" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/tv_cafeyter" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/buttonCopas"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/forma_redondeada"
+                                    android:src="@drawable/nightlife_fill1_wght100_grad0_opsz48" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/tv_copas" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="5dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/buttonRepDomici"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/forma_redondeada"
+                                    android:src="@drawable/food_bank_fill1_wght100_grad0_opsz48" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/tv_respaDomi" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/buttonOil"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/forma_redondeada"
+                                    android:src="@drawable/local_gas_station_fill1_wght100_grad200_opsz48" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/tv_gasoli" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/buttonPasteleri"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/forma_redondeada"
+                                    android:src="@drawable/cake_fill1_wght100_grad200_opsz48" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/tv_rpaste" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
 
             <TextView
                 android:id="@+id/tv_recomenda"

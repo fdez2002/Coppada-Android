@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -70,6 +71,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this@MapFragment)
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Ocultar el NestedScrollView
+        //val nestedScrollView = requireActivity().findViewById<NestedScrollView>(R.id.nestedScrollView)
+
+        //nestedScrollView.visibility = View.GONE
     }
 
 

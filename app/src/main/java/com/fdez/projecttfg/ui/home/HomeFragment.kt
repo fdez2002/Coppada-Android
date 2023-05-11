@@ -5,19 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fdez.projecttfg.*
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
+import com.fdez.projecttfg.Negocio
+import com.fdez.projecttfg.R
 import com.fdez.projecttfg.adapters.NegocioAdapter
 import com.fdez.projecttfg.databinding.FragmentHomeBinding
 import com.fdez.projecttfg.managerCache.CacheManager
 import com.fdez.projecttfg.ui.detailCategory.DetallCategoryFragment
 import com.fdez.projecttfg.ui.detalleNegocio.DetalleNegocioFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.like.OnLikeListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,6 +38,9 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private var scrollPosition = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,9 +113,6 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     private fun navegarCategory(categoria: String, titulo: String){
         val bundle = Bundle()
@@ -185,6 +186,9 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        val bundle = arguments ?: Bundle()
+        bundle.putInt("scroll_position", scrollPosition)
+        arguments = bundle
     }
 
 }

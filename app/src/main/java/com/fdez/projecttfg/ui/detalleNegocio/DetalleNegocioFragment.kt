@@ -90,10 +90,10 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     }
     private fun cargarDatos(){
         val cadena = arguments?.getString("cadena")
-        Log.d(tag, cadena.toString())
+        //Log.d(tag, cadena.toString())
         CoroutineScope(Dispatchers.IO).launch {
-            negocioReviwsList = YelpApi().getBusinessReviews(cadena.toString())
-            Log.d(tag, negocioReviwsList.toString())
+            //negocioReviwsList = YelpApi().getBusinessReviews(cadena.toString())
+            //Log.d(tag, negocioReviwsList.toString())
         }
 
 
