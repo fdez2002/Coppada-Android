@@ -1,20 +1,20 @@
 package com.fdez.projecttfg.ui.detalleNegocio
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.fdez.projecttfg.Api.YelpApi
-import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.Review
+import com.fdez.projecttfg.adapters.NegocioAdapter
+import com.fdez.projecttfg.adapters.ReviewAdapter
 import com.fdez.projecttfg.databinding.FragmentDetalleNegocioBinding
 import com.fdez.projecttfg.databinding.FragmentHomeBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -45,6 +45,10 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
     private var latLngBusines: LatLng? = LatLng(0.0, 0.0)
 
+    private var alias: String? = null
+
+    private var reviewsList: List<Review>? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,6 +65,7 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
         }
 
         cargarDatos()
+        obtenerReviews()
 
         binding.toolbarBackButton.setOnClickListener {
             val navController = findNavController()
@@ -90,11 +95,7 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     }
     private fun cargarDatos(){
         val cadena = arguments?.getString("cadena")
-        //Log.d(tag, cadena.toString())
-        CoroutineScope(Dispatchers.IO).launch {
-            negocioReviwsList = YelpApi().getBusinessReviews(cadena.toString())
-            Log.d("revies", negocioReviwsList.toString())
-        }
+        alias = cadena
 
 
         try {
@@ -128,6 +129,24 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
             }
         }catch (ex: Exception){
             Log.d(tag, ex.toString())
+        }
+
+
+    }
+    private fun obtenerReviews(){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            //Si no está en la cache, realiza la llamada a la API
+            negocioReviwsList = YelpApi().getBusinessReviews(alias.toString())
+            Log.d("revies", negocioReviwsList.toString())
+            withContext(Dispatchers.Main) {
+                //Configurar RecyclerView y Adapter
+                val recyclerView = binding.recyReviews
+                recyclerView.layoutManager = LinearLayoutManager(context)
+                val adapter = ReviewAdapter(negocioReviwsList)
+                recyclerView.adapter = adapter
+            }
+
         }
 
 
