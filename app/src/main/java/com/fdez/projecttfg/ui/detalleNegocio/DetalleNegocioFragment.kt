@@ -93,7 +93,7 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
         //Log.d(tag, cadena.toString())
         CoroutineScope(Dispatchers.IO).launch {
             negocioReviwsList = YelpApi().getBusinessReviews(cadena.toString())
-            Log.d(tag, negocioReviwsList.toString())
+            Log.d("revies", negocioReviwsList.toString())
         }
 
 
