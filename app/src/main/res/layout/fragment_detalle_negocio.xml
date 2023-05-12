@@ -144,6 +144,17 @@
                 map:cameraZoom="10"
                 tools:ignore="SpeakableTextPresentCheck" />
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/koulen_regular"
+                android:padding="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/tv_revi"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recy_reviews"
                 android:layout_width="match_parent"
