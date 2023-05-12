@@ -22,6 +22,7 @@
     <string name="tv_Contacto">Contacto</string>
     <string name="tv_ubi">Ubicación</string>
     <string name="tv_revi">Reviews</string>
+    <string name="tv_reviNo">No tiene reviews</string>
     <string name="fab_llamar">Llamar</string>
     <string name="fab_web">Visitar</string>
 

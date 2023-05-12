@@ -17,6 +17,7 @@ class ReviewAdapter (
         RecyclerView.ViewHolder(binding.root) {
 
             fun bind(review: Review){
+
                 Glide.with(binding.root.context)
                     .load(review.user.image_url)
                     .error(com.denzcoskun.imageslider.R.drawable.error)

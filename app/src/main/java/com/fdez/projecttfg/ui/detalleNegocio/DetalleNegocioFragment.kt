@@ -140,11 +140,16 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
             negocioReviwsList = YelpApi().getBusinessReviews(alias.toString())
             Log.d("revies", negocioReviwsList.toString())
             withContext(Dispatchers.Main) {
-                //Configurar RecyclerView y Adapter
-                val recyclerView = binding.recyReviews
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                val adapter = ReviewAdapter(negocioReviwsList)
-                recyclerView.adapter = adapter
+                // Detectamo si la lista esta vacia
+                if(negocioReviwsList.isNotEmpty()) {
+                    //Configurar RecyclerView y Adapter
+                    val recyclerView = binding.recyReviews
+                    recyclerView.layoutManager = LinearLayoutManager(context)
+                    val adapter = ReviewAdapter(negocioReviwsList)
+                    recyclerView.adapter = adapter
+                }else{
+                    binding.textView10.text = "No tiene reviews"
+                }
             }
 
         }
