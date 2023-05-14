@@ -90,7 +90,7 @@ class ResCiudadFragment : Fragment() {
                         val recyclerView = binding.rvRYB
                         recyclerView.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        val adapter = negocioListBYR?.let { NegocioAdapterSmall(it) }
+                        val adapter = negocioListBYR?.let { NegocioAdapterSmall(it, null, requireContext()) }
                         recyclerView.adapter = adapter
 
                         adapter?.let { navegarDetallebuss(it) }
@@ -119,7 +119,7 @@ class ResCiudadFragment : Fragment() {
                         val recyclerView = binding.rvCafeTe
                         recyclerView.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        val adapter = negocioListCafeTe?.let { NegocioAdapterSmall(it) }
+                        val adapter = negocioListCafeTe?.let { NegocioAdapterSmall(it, null, requireContext()) }
                         recyclerView.adapter = adapter
 
                         adapter?.let { navegarDetallebuss(it) }
@@ -147,7 +147,7 @@ class ResCiudadFragment : Fragment() {
                         val recyclerView = binding.rvBaker
                         recyclerView.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        val adapter = negocioListBakeri?.let { NegocioAdapterSmall(it) }
+                        val adapter = negocioListBakeri?.let { NegocioAdapterSmall(it, null, requireContext()) }
                         recyclerView.adapter = adapter
 
                         adapter?.let { navegarDetallebuss(it) }
@@ -176,7 +176,7 @@ class ResCiudadFragment : Fragment() {
                         val recyclerView = binding.rvCopas
                         recyclerView.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        val adapter = negocioListCopas?.let { NegocioAdapterSmall(it) }
+                        val adapter = negocioListCopas?.let { NegocioAdapterSmall(it, null, requireContext()) }
                         recyclerView.adapter = adapter
 
                         adapter?.let { navegarDetallebuss(it) }
@@ -204,7 +204,7 @@ class ResCiudadFragment : Fragment() {
                         val recyclerView = binding.rvFastFood
                         recyclerView.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        val adapter = negocioListFatsFood?.let { NegocioAdapterSmall(it) }
+                        val adapter = negocioListFatsFood?.let { NegocioAdapterSmall(it, null, requireContext()) }
                         recyclerView.adapter = adapter
 
                         adapter?.let { navegarDetallebuss(it) }
@@ -232,7 +232,7 @@ class ResCiudadFragment : Fragment() {
                         val recyclerView = binding.rvOil
                         recyclerView.layoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        val adapter = negocioListGasolineras?.let { NegocioAdapterSmall(it) }
+                        val adapter = negocioListGasolineras?.let { NegocioAdapterSmall(it, null, requireContext()) }
                         recyclerView.adapter = adapter
 
                         adapter?.let { navegarDetallebuss(it) }

@@ -1,8 +1,10 @@
 package com.fdez.projecttfg.adapters
 import android.content.ContentValues
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
@@ -17,7 +19,9 @@ import com.like.OnLikeListener
 
 class NegocioAdapterSmall(
     private val negocios: List<Negocio>,
-    private var listener: OnItemClickListenerNegocio? = null
+    private var listener: OnItemClickListenerNegocio? = null,
+    private val context: Context
+
 ) :
     RecyclerView.Adapter<NegocioAdapterSmall.NegocioViewHolder>() {
     private val db = Firebase.firestore
@@ -65,6 +69,7 @@ class NegocioAdapterSmall(
                     }else{
                         binding.likeButton.isLiked =
                             false
+                        Toast.makeText(context, "Regístrate para tener acceso a todas las funcionalidades.", Toast.LENGTH_SHORT).show()
                     }
 
 

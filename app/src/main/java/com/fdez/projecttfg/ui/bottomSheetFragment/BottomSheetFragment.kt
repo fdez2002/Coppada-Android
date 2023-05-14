@@ -1,4 +1,4 @@
-package com.fdez.projecttfg
+package com.fdez.projecttfg.ui.bottomSheetFragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

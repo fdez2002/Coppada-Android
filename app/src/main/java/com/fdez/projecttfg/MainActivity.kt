@@ -1,7 +1,5 @@
 package com.fdez.projecttfg
 
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -9,15 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.fdez.projecttfg.databinding.ActivityMainBinding
-import android.os.AsyncTask
-import android.util.AttributeSet
-import android.util.Log
-import android.view.View
-import androidx.appcompat.app.AlertDialog
-import com.fdez.projecttfg.Api.OnAlertListener
-import com.fdez.projecttfg.Api.YelpApi
 import com.google.firebase.FirebaseApp
-import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 

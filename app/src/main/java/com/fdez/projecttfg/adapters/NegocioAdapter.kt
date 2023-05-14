@@ -6,13 +6,17 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.fdez.projecttfg.Api.OnAlertListener
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Negocio
+import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -23,10 +27,11 @@ import com.like.OnLikeListener
 class NegocioAdapter(
     private val negocios: List<Negocio>,
     private var listener: OnItemClickListenerNegocio? = null ,
-    private val alertListener: OnAlertListener? = null
+    private val context: Context
 
 
 ) :
+
     RecyclerView.Adapter<NegocioAdapter.NegocioViewHolder>() {
 
     private val db = Firebase.firestore
@@ -59,6 +64,7 @@ class NegocioAdapter(
             binding.likeButton.setOnLikeListener(object : OnLikeListener {
                 override fun liked(likeButton: LikeButton) {
 
+
                     //Guarda el alias del usuario en la base de datos
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
                     val alias = negocio.alias // Aquí debes usar el alias que el usuario haya ingresado
@@ -79,8 +85,7 @@ class NegocioAdapter(
                         binding.likeButton.isLiked =
                             false
 
-                        alertListener?.showAlert("", "Regístrate para tener acceso a todas las funcionalidades.")
-
+                        Toast.makeText(context, "Regístrate para tener acceso a todas las funcionalidades.", Toast.LENGTH_SHORT).show()
 
 
                     }
@@ -122,17 +127,12 @@ class NegocioAdapter(
                 for (document in documents) {
                     val liked = document.getString("liked")
 
-                    if (liked != null && liked == "true" && alias == negocio.alias) {
-                        binding.likeButton.isLiked =
-                            true
-                    }else{
-                        binding.likeButton.isLiked =
-                            false
-                    } //Actualiza el estado del botón de "me gusta" en la pantalla
+                    binding.likeButton.isLiked = liked != null && liked ==  "true" && alias == negocio.alias //Actualiza el estado del botón de "me gusta" en la pantalla
                 }
             }.addOnFailureListener { exception ->
                 Log.w(TAG, "Error al obtener el documento: ", exception)
             }
+
 
         }
 

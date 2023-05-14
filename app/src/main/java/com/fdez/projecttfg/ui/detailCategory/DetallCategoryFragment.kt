@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fdez.projecttfg.Api.OnAlertListener
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.Negocio
@@ -23,7 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class DetallCategoryFragment : Fragment(), OnAlertListener {
+class DetallCategoryFragment : Fragment() {
 
     // Variable global para almacenar la lista de negocios
     private var negocioList: List<Negocio>? = null
@@ -83,7 +82,7 @@ class DetallCategoryFragment : Fragment(), OnAlertListener {
                         // Configurar RecyclerView y Adapter
                         val recyclerView = binding.rvNegocios2
                         recyclerView.layoutManager = LinearLayoutManager(context)
-                        val adapter = negocioList?.let { NegocioAdapter(it) }
+                        val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext()) }
 
                         recyclerView.adapter = adapter
 
@@ -111,7 +110,7 @@ class DetallCategoryFragment : Fragment(), OnAlertListener {
             // Si la lista de negocios ya ha sido inicializada, se configura el RecyclerView con los datos ya cargados
             val recyclerView = binding.rvNegocios2
             recyclerView.layoutManager = LinearLayoutManager(context)
-            val adapter = NegocioAdapter(negocioList!!)
+            val adapter = NegocioAdapter(negocioList!!, null, requireContext())
             recyclerView.adapter = adapter
 
             adapter.setOnItemClickListener(object : OnItemClickListenerNegocio {
@@ -152,16 +151,5 @@ class DetallCategoryFragment : Fragment(), OnAlertListener {
         }
     }
 
-    override fun showAlert(title: String, message: String) {
-        // Mostrar la alerta al usuario
-        // Por ejemplo, mediante un AlertDialog
-        AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
 
 }
