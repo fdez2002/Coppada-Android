@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
     private var scrollPosition = 0
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -131,7 +132,7 @@ class HomeFragment : Fragment() {
         val cacheKey = "negocioListFavo"
         val cache = CacheManager(requireContext())
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO ).launch {
             //Intenta obtener la lista de negocios de la cache
             val cachedNegocioList = cache.loadData<List<Negocio>>(cacheKey)
 

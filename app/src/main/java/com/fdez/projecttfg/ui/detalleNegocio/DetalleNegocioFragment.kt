@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -48,6 +49,9 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     private var alias: String? = null
 
     private var reviewsList: List<Review>? = null
+
+    private var job: Job? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,31 +103,40 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
 
         try {
-            CoroutineScope(Dispatchers.IO).launch {
-                val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
+            CoroutineScope(Dispatchers.IO).launch  {
+                try {
 
 
-                if (negocioDetalle != null) {
-                    withContext(Dispatchers.Main) {
-                        val imageList = ArrayList<SlideModel>() // Create image list
-                        for (photoUrl in negocioDetalle.photos) {
-                            val slideModel = SlideModel(photoUrl)
-                            imageList.add(slideModel)
+                    val negocioDetalle = YelpApi().getBusinessDetails(cadena.toString())
+
+
+                    if (negocioDetalle != null) {
+                        withContext(Dispatchers.Main) {
+                            val imageList = ArrayList<SlideModel>() // Create image list
+                            for (photoUrl in negocioDetalle.photos) {
+                                val slideModel = SlideModel(photoUrl)
+                                imageList.add(slideModel)
+                            }
+                            binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
+                            binding.tvNombreN.text = negocioDetalle.name
+                            binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
+                            web = negocioDetalle.url
+                            //binding.tvPaginaWebN.text = negocioDetalle.url
+                            number = negocioDetalle.phone
+                            //binding.tvContactoN.text = negocioDetalle.phone
+                            negocioDetalle.coordinates?.let { location ->
+                                latLngBusines =
+                                    LatLng(
+                                        location.latitude.toDouble(),
+                                        location.longitude.toDouble()
+                                    )
+                                setupMap()
+                            }
+
                         }
-                        binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
-                        binding.tvNombreN.text = negocioDetalle.name
-                        binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
-                        web = negocioDetalle.url
-                        //binding.tvPaginaWebN.text = negocioDetalle.url
-                        number = negocioDetalle.phone
-                        //binding.tvContactoN.text = negocioDetalle.phone
-                        negocioDetalle.coordinates?.let { location ->
-                            latLngBusines =
-                                LatLng(location.latitude.toDouble(), location.longitude.toDouble())
-                            setupMap()
-                        }
-
                     }
+                }catch (e: Exception){
+                    Log.d(tag, e.toString())
                 }
 
             }
@@ -134,23 +147,27 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
     }
     private fun obtenerReviews(){
-        CoroutineScope(Dispatchers.IO).launch {
+         CoroutineScope(Dispatchers.IO).launch{
+             try {
 
-            //Si no está en la cache, realiza la llamada a la API
-            negocioReviwsList = YelpApi().getBusinessReviews(alias.toString())
-            Log.d("revies", negocioReviwsList.toString())
-            withContext(Dispatchers.Main) {
-                // Detectamo si la lista esta vacia
-                if(negocioReviwsList.isNotEmpty()) {
-                    //Configurar RecyclerView y Adapter
-                    val recyclerView = binding.recyReviews
-                    recyclerView.layoutManager = LinearLayoutManager(context)
-                    val adapter = ReviewAdapter(negocioReviwsList)
-                    recyclerView.adapter = adapter
-                }else{
-                    binding.textView10.text = "No tiene reviews"
-                }
-            }
+                 //Si no está en la cache, realiza la llamada a la API
+                 negocioReviwsList = YelpApi().getBusinessReviews(alias.toString())
+                 Log.d("revies", negocioReviwsList.toString())
+                 withContext(Dispatchers.Main) {
+                     // Detectamo si la lista esta vacia
+                     if (negocioReviwsList.isNotEmpty()) {
+                         //Configurar RecyclerView y Adapter
+                         val recyclerView = binding.recyReviews
+                         recyclerView.layoutManager = LinearLayoutManager(context)
+                         val adapter = ReviewAdapter(negocioReviwsList)
+                         recyclerView.adapter = adapter
+                     } else {
+                         binding.textView10.text = "No tiene reviews"
+                     }
+                 }
+             }catch (e: Exception){
+                 Log.d(tag, e.toString())
+             }
 
         }
 
@@ -189,6 +206,8 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        job?.cancel()
+
 
 
     }

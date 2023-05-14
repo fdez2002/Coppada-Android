@@ -88,15 +88,6 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-                <com.like.LikeButton
-                    android:id="@+id/like_button"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    app:anim_scale_factor="10"
-                    app:icon_size="10dp"
-                    app:icon_type="heart" />
-
             </LinearLayout>
 
             <!-- Buttons -->
