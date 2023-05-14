@@ -13,6 +13,8 @@ import android.os.AsyncTask
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
+import com.fdez.projecttfg.Api.OnAlertListener
 import com.fdez.projecttfg.Api.YelpApi
 import com.google.firebase.FirebaseApp
 import java.io.IOException
@@ -43,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         //YelpSearchTask().execute("pizza", "Linares")
     }
-
 
 
 

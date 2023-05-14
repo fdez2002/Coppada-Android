@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fdez.projecttfg.Api.OnAlertListener
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Api.YelpApi
 import com.fdez.projecttfg.Negocio
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class DetallCategoryFragment : Fragment() {
+class DetallCategoryFragment : Fragment(), OnAlertListener {
 
     // Variable global para almacenar la lista de negocios
     private var negocioList: List<Negocio>? = null
@@ -82,6 +84,7 @@ class DetallCategoryFragment : Fragment() {
                         val recyclerView = binding.rvNegocios2
                         recyclerView.layoutManager = LinearLayoutManager(context)
                         val adapter = negocioList?.let { NegocioAdapter(it) }
+
                         recyclerView.adapter = adapter
 
                         adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
@@ -148,4 +151,17 @@ class DetallCategoryFragment : Fragment() {
             return fragment
         }
     }
+
+    override fun showAlert(title: String, message: String) {
+        // Mostrar la alerta al usuario
+        // Por ejemplo, mediante un AlertDialog
+        AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 }

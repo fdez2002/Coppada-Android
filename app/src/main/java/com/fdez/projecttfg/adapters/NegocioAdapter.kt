@@ -1,22 +1,19 @@
 package com.fdez.projecttfg.adapters
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fdez.projecttfg.Api.OnAlertListener
 import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
-import com.fdez.projecttfg.DetailBusiness
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.like.LikeButton
@@ -25,14 +22,17 @@ import com.like.OnLikeListener
 
 class NegocioAdapter(
     private val negocios: List<Negocio>,
-    private var listener: OnItemClickListenerNegocio? = null
+    private var listener: OnItemClickListenerNegocio? = null ,
+    private val alertListener: OnAlertListener? = null
+
+
 ) :
     RecyclerView.Adapter<NegocioAdapter.NegocioViewHolder>() {
-    private var firebaseFireStore: FirebaseFirestore? = null
-    private lateinit var auth: FirebaseAuth
 
     private val db = Firebase.firestore
     private val offersCollection = db.collection("likes")
+
+
 
     inner class NegocioViewHolder(private val binding: ItemCardLocalesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -78,6 +78,11 @@ class NegocioAdapter(
                     }else{
                         binding.likeButton.isLiked =
                             false
+
+                        alertListener?.showAlert("", "Regístrate para tener acceso a todas las funcionalidades.")
+
+
+
                     }
 
 
@@ -131,6 +136,16 @@ class NegocioAdapter(
 
         }
 
+    }
+    //Función para mostrar el AlertDialog
+    fun showAlert(context: Context, title: String, message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("ok") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
 

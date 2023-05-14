@@ -22,6 +22,7 @@ class NegocioAdapterSmall(
     RecyclerView.Adapter<NegocioAdapterSmall.NegocioViewHolder>() {
     private val db = Firebase.firestore
     private val offersCollection = db.collection("likes")
+
     inner class NegocioViewHolder(private val binding: SmallItemCardLocalesBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -103,13 +104,8 @@ class NegocioAdapterSmall(
                 for (document in documents) {
                     val liked = document.getString("liked")
 
-                    if (liked != null && liked == "true" && alias == negocio.alias) {
-                        binding.likeButton.isLiked =
-                            true
-                    }else{
-                        binding.likeButton.isLiked =
-                            false
-                    } //Actualiza el estado del botón de "me gusta" en la pantalla
+                    binding.likeButton.isLiked =
+                        liked != null && liked == "true" && alias == negocio.alias //Actualiza el estado del botón de "me gusta" en la pantalla
                 }
             }.addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error al obtener el documento: ", exception)

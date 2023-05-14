@@ -34,6 +34,7 @@ class ResCiudadFragment : Fragment() {
     private var negocioListBakeri: List<Negocio>? = null
     private var negocioListCopas: List<Negocio>? = null
     private var negocioListFatsFood: List<Negocio>? = null
+    private var negocioListGasolineras: List<Negocio>? = null
 
 
     override fun onCreateView(
@@ -74,7 +75,6 @@ class ResCiudadFragment : Fragment() {
     }
     private fun mostrarResBar(ciudad: String?){
         if (ciudad == null) {
-            // mostrar mensaje de error
             return
         }
 
@@ -82,14 +82,19 @@ class ResCiudadFragment : Fragment() {
             try {
                 negocioListBYR = YelpApi().search("restaurantes,bars", ciudad.toString())
                 withContext(Dispatchers.Main) {
-                    //Configurar RecyclerView y Adapter
-                    val recyclerView = binding.rvRYB
-                    recyclerView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    val adapter = negocioListBYR?.let { NegocioAdapterSmall(it) }
-                    recyclerView.adapter = adapter
+                    if(negocioListBYR.isNullOrEmpty()){
+                        binding.textViewRB.visibility = View.GONE
 
-                    adapter?.let { navegarDetallebuss(it) }
+                    }else {
+                        //Configurar RecyclerView y Adapter
+                        val recyclerView = binding.rvRYB
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        val adapter = negocioListBYR?.let { NegocioAdapterSmall(it) }
+                        recyclerView.adapter = adapter
+
+                        adapter?.let { navegarDetallebuss(it) }
+                    }
                 }
             } catch (e: Exception) {
             }
@@ -99,20 +104,26 @@ class ResCiudadFragment : Fragment() {
     private fun mostrarCafeTe(ciudad: String?) {
 
         if (ciudad == null) {
+            binding.textViewCT.visibility = View.GONE
             return
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 negocioListCafeTe = YelpApi().search("Coffee & Tea", ciudad.toString())
                 withContext(Dispatchers.Main) {
-                    //Configurar RecyclerView y Adapter
-                    val recyclerView = binding.rvCafeTe
-                    recyclerView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    val adapter = negocioListCafeTe?.let { NegocioAdapterSmall(it) }
-                    recyclerView.adapter = adapter
+                    if(negocioListCafeTe.isNullOrEmpty()){
+                        binding.textViewCT.visibility = View.GONE
 
-                    adapter?.let { navegarDetallebuss(it) }
+                    }else {
+                        //Configurar RecyclerView y Adapter
+                        val recyclerView = binding.rvCafeTe
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        val adapter = negocioListCafeTe?.let { NegocioAdapterSmall(it) }
+                        recyclerView.adapter = adapter
+
+                        adapter?.let { navegarDetallebuss(it) }
+                    }
                 }
             }catch (e: Exception){
 
@@ -121,20 +132,26 @@ class ResCiudadFragment : Fragment() {
     }
     private fun mostrarBakeries(ciudad: String?) {
         if (ciudad == null) {
+            binding.textViewP.visibility = View.GONE
             return
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 negocioListBakeri = YelpApi().search("Bakeries", ciudad.toString())
                 withContext(Dispatchers.Main) {
-                    //Configurar RecyclerView y Adapter
-                    val recyclerView = binding.rvBaker
-                    recyclerView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    val adapter = negocioListBakeri?.let { NegocioAdapterSmall(it) }
-                    recyclerView.adapter = adapter
+                    if(negocioListBakeri.isNullOrEmpty()){
+                        binding.textViewP.visibility = View.GONE
 
-                    adapter?.let { navegarDetallebuss(it) }
+                    }else {
+                        //Configurar RecyclerView y Adapter
+                        val recyclerView = binding.rvBaker
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        val adapter = negocioListBakeri?.let { NegocioAdapterSmall(it) }
+                        recyclerView.adapter = adapter
+
+                        adapter?.let { navegarDetallebuss(it) }
+                    }
                 }
             }catch (e: Exception){
 
@@ -144,20 +161,26 @@ class ResCiudadFragment : Fragment() {
     }
     private fun mostrarCopas(ciudad: String?) {
         if (ciudad == null) {
+            binding.textViewDCO.visibility = View.GONE
             return
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 negocioListCopas = YelpApi().search("bars", ciudad.toString())
                 withContext(Dispatchers.Main) {
-                    //Configurar RecyclerView y Adapter
-                    val recyclerView = binding.rvCopas
-                    recyclerView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    val adapter = negocioListCopas?.let { NegocioAdapterSmall(it) }
-                    recyclerView.adapter = adapter
+                    if(negocioListCopas.isNullOrEmpty()){
+                        binding.textViewDCO.visibility = View.GONE
 
-                    adapter?.let { navegarDetallebuss(it) }
+                    }else {
+                        //Configurar RecyclerView y Adapter
+                        val recyclerView = binding.rvCopas
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        val adapter = negocioListCopas?.let { NegocioAdapterSmall(it) }
+                        recyclerView.adapter = adapter
+
+                        adapter?.let { navegarDetallebuss(it) }
+                    }
                 }
             }catch (e: Exception){
 
@@ -166,20 +189,26 @@ class ResCiudadFragment : Fragment() {
     }
     private fun mostrarFastFood(ciudad: String?) {
         if (ciudad == null) {
+            binding.textViewFF.visibility = View.GONE
             return
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 negocioListFatsFood = YelpApi().search("fast food", ciudad.toString())
                 withContext(Dispatchers.Main) {
-                    //Configurar RecyclerView y Adapter
-                    val recyclerView = binding.rvFastFood
-                    recyclerView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    val adapter = negocioListFatsFood?.let { NegocioAdapterSmall(it) }
-                    recyclerView.adapter = adapter
+                    if(negocioListFatsFood.isNullOrEmpty()){
+                        binding.textViewFF.visibility = View.GONE
 
-                    adapter?.let { navegarDetallebuss(it) }
+                    }else {
+                        //Configurar RecyclerView y Adapter
+                        val recyclerView = binding.rvFastFood
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        val adapter = negocioListFatsFood?.let { NegocioAdapterSmall(it) }
+                        recyclerView.adapter = adapter
+
+                        adapter?.let { navegarDetallebuss(it) }
+                    }
                 }
             }catch (e: Exception){
 
@@ -188,20 +217,26 @@ class ResCiudadFragment : Fragment() {
     }
     private fun mostrarOil(ciudad: String?) {
         if (ciudad == null) {
+            binding.textViewGasol.visibility = View.GONE
             return
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                negocioListFatsFood = YelpApi().search("Gasolineras", ciudad.toString())
+                negocioListGasolineras = YelpApi().search("Gasolineras", ciudad.toString())
                 withContext(Dispatchers.Main) {
-                    //Configurar RecyclerView y Adapter
-                    val recyclerView = binding.rvOil
-                    recyclerView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    val adapter = negocioListFatsFood?.let { NegocioAdapterSmall(it) }
-                    recyclerView.adapter = adapter
+                    if(negocioListGasolineras.isNullOrEmpty()){
+                        binding.textViewGasol.visibility = View.GONE
 
-                    adapter?.let { navegarDetallebuss(it) }
+                    }else {
+                        //Configurar RecyclerView y Adapter
+                        val recyclerView = binding.rvOil
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        val adapter = negocioListGasolineras?.let { NegocioAdapterSmall(it) }
+                        recyclerView.adapter = adapter
+
+                        adapter?.let { navegarDetallebuss(it) }
+                    }
                 }
             } catch (e: Exception) {
 
