@@ -37,7 +37,6 @@ class FavoriteFragment : Fragment() {
     private var negocioList: List<Negocio>? = null
     private var bottomNavigationView: BottomNavigationView? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

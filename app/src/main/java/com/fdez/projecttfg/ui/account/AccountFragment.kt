@@ -164,7 +164,7 @@ class AccountFragment : Fragment() {
                         //El inicio de sesión ha sido exitoso
                         detectarLoginUser()
                     } else {
-                        Toast.makeText(requireContext(), "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Usuario no registrado o datos incorrectos", Toast.LENGTH_SHORT).show()
                         //El inicio de sesión ha fallado
                     }
                 }
@@ -183,7 +183,7 @@ class AccountFragment : Fragment() {
                             //El inicio de sesión ha sido exitoso
                             detectarLoginUser()
                         } else {
-                            Toast.makeText(requireContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                             //El inicio de sesión ha fallado
                         }
                     }
