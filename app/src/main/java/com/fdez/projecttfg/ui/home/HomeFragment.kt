@@ -187,9 +187,9 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        val bundle = arguments ?: Bundle()
-        bundle.putInt("scroll_position", scrollPosition)
-        arguments = bundle
+        //val bundle = arguments ?: Bundle()
+        //bundle.putInt("scroll_position", scrollPosition)
+        //arguments = bundle
     }
 
 }
