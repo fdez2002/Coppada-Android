@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-
 import com.fdez.projecttfg.databinding.FragmentAccountBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -62,12 +61,42 @@ class AccountFragment : Fragment() {
         binding.buttonCerrarSesi.setOnClickListener{
             cerrarSesion()
         }
+        binding.buttonCamContra.setOnClickListener{
+            resetPass()
+        }
 
         return root
     }
+
+
+    private fun resetPass() {
+        //val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        val emailAddress = user!!.email
+
+        if (emailAddress != null) {
+            auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        showAlert(requireContext(), "",
+                            "Se ha enviado un correo para restablecer la contraseña a $emailAddress. Si no lo ves, revisa el spam", )
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error al enviar el correo de restablecimiento de contraseña",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+
+    }
+
     private fun activarIniciosesion(){
        //binding.buttonCamContra.isVisible = false
         binding.buttonCerrarSesi.isVisible = false
+        binding.buttonCamContra.isVisible = false
         binding.tiResg.isVisible = false
 
         binding.buttonResgistrar.isVisible = true
@@ -77,6 +106,7 @@ class AccountFragment : Fragment() {
     private fun desacticarInicioSesion(){
        //binding.buttonCamContra.isVisible = true
         binding.buttonCerrarSesi.isVisible = true
+        binding.buttonCamContra.isVisible = true
         binding.tiResg.isVisible = true
 
         binding.buttonResgistrar.isVisible = false
@@ -134,7 +164,7 @@ class AccountFragment : Fragment() {
                         //El inicio de sesión ha sido exitoso
                         detectarLoginUser()
                     } else {
-                        Toast.makeText(requireContext(), "Usuario no registrado o datos incorrectos", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                         //El inicio de sesión ha fallado
                     }
                 }

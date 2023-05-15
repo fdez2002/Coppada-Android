@@ -137,17 +137,6 @@ class NegocioAdapter(
         }
 
     }
-    //Función para mostrar el AlertDialog
-    fun showAlert(context: Context, title: String, message: String) {
-        AlertDialog.Builder(context)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("ok") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
 
     fun setOnItemClickListener(listener: OnItemClickListenerNegocio) {
         this.listener = listener

@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="1"
-                    android:text="Resgistrarse" />
+                    android:text="@string/tv_regis" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -104,18 +104,9 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="Iniciar Sesión" />
+                    android:text="@string/tv_iniciarS" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/buttonCerrarSesi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0"
-                android:text="Cerrar Sesión"
-                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/buttonCamContra"
@@ -123,8 +114,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:text="Restablecer contraseña"
+                android:text="@string/tv_restablecerContra"
                 android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/buttonCerrarSesi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:text="@string/tv_cerrarSe"
+                android:visibility="invisible" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

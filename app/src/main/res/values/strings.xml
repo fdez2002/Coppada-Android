@@ -34,7 +34,11 @@
     <string name="tv_rpaste">Pastelerías</string>
     <string name="tv_gasoli">Gasolineras</string>
 
-
+    <!-- Texto Cuenta -->
+    <string name="tv_iniciarS">Iniciar sesión</string>
+    <string name="tv_regis">Registrarse</string>
+    <string name="tv_cerrarSe">Cerrar sesión</string>
+    <string name="tv_restablecerContra">Restablecer contraseña</string>
 
     <string name="tv_fav">Tus favoritos</string>
     <string name="tv_recomendados">¿Te apetece?</string>
