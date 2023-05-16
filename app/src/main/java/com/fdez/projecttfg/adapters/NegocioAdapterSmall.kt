@@ -1,4 +1,5 @@
 package com.fdez.projecttfg.adapters
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
@@ -69,7 +70,8 @@ class NegocioAdapterSmall(
                     }else{
                         binding.likeButton.isLiked =
                             false
-                        Toast.makeText(context, "Regístrate para tener acceso a todas las funcionalidades.", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "Regístrate para tener acceso a todas las funcionalidades.", Toast.LENGTH_SHORT).show()
+                        showAlert(context, "","Regístrate para tener acceso a todas las funcionalidades.")
                     }
 
 
@@ -117,6 +119,15 @@ class NegocioAdapterSmall(
             }
         }
 
+    }
+    fun showAlert(context: Context, title: String, message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("ok") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     fun setOnItemClickListener(listener: OnItemClickListenerNegocio) {
