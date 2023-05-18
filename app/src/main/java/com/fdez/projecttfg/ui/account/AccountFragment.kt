@@ -118,6 +118,8 @@ class AccountFragment : Fragment() {
         FirebaseAuth.getInstance().signOut()
         Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_LONG).show()
         activarIniciosesion()
+        binding.textFieldCorreo.isEnabled = true
+        binding.textFieldNombre.isEnabled = true
 
     }
 
@@ -139,6 +141,8 @@ class AccountFragment : Fragment() {
                 if (nombre != null) {
                     binding.textFieldNombre.setText(nombre)
                 }
+                binding.textFieldCorreo.isEnabled = false
+                binding.textFieldNombre.isEnabled = false
             } else {
                 //El correo electrónico del usuario no ha sido verificado
                 Toast.makeText(requireContext(), "Por favor, verifica tu correo electrónico", Toast.LENGTH_SHORT).show()
@@ -163,6 +167,7 @@ class AccountFragment : Fragment() {
                     if (task.isSuccessful) {
                         //El inicio de sesión ha sido exitoso
                         detectarLoginUser()
+
                     } else {
                         Toast.makeText(requireContext(), "Usuario no registrado o datos incorrectos", Toast.LENGTH_SHORT).show()
                         //El inicio de sesión ha fallado

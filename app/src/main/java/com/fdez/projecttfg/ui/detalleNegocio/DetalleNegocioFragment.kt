@@ -120,6 +120,7 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
                             binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
                             binding.tvNombreN.text = negocioDetalle.name
                             binding.ratingBar2.rating = negocioDetalle.rating.toFloat()
+                            binding.textViewRevCountDN.text = negocioDetalle.review_count.toString()
                             web = negocioDetalle.url
                             //binding.tvPaginaWebN.text = negocioDetalle.url
                             number = negocioDetalle.phone

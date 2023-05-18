@@ -60,15 +60,38 @@
                 android:textColor="@color/md_theme_dark_scrim"
                 android:textSize="48sp" />
 
-            <RatingBar
-                android:id="@+id/ratingBar2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:filterTouchesWhenObscured="false"
-                android:isIndicator="true"
-                android:progressTint="#FFC107"
-                tools:ignore="SpeakableTextPresentCheck" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/ratingBar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:filterTouchesWhenObscured="false"
+                    android:isIndicator="true"
+                    android:progressTint="#FFC107"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <TextView
+                    android:id="@+id/textView_revCountDN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/koulen_regular"
+                    android:gravity="center"
+                    android:text=""
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="20sp"/>
+            </LinearLayout>
 
             <View
                 android:id="@+id/ratingBarLine"
