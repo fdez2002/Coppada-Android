@@ -1,6 +1,7 @@
 package com.fdez.projecttfg.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -144,6 +145,7 @@ class HomeFragment : Fragment() {
             } else {
                 //Si no está en la cache, realiza la llamada a la API
                 negocioList = YelpApi().search("Fast Food", "Madrid")
+                Log.d(tag, negocioList.toString())
                 //Guarda la lista en la cache para futuras consultas
                 cache.saveData(cacheKey, negocioList)
                 isDataLoaded = true // La lista de negocios ya ha sido cargada

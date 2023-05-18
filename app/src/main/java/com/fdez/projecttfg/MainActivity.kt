@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
             )
         )
         navView.setupWithNavController(navController)
-        //YelpSearchTask().execute("pizza", "Linares")
     }
 
 
