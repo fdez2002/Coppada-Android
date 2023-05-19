@@ -1,10 +1,15 @@
 package com.fdez.projecttfg.ui.detalleNegocio
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 
 class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
@@ -83,10 +89,10 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
         }
         binding.extendedFabLlmar.setOnClickListener {
-            val phoneNumber = number
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:$phoneNumber")
-            startActivity(intent)
+            //checkPermissionAndRequest()
+            llamar()
+
+
         }
         binding.extendedFabWeb.setOnClickListener {
             val url = web
@@ -97,6 +103,34 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
 
         return binding.root
     }
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        if (isGranted) {
+            //El usuario otorgó el permiso
+            //Realiza las operaciones que requieren el permiso
+            llamar()
+        } else {
+            //El usuario denegó el permiso
+            //Maneja esta situación según tus necesidades
+        }
+    }
+
+    private fun checkPermissionAndRequest() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            //Si el permiso no ha sido otorgado, solicitarlo al usuario
+            requestPermissionLauncher.launch(Manifest.permission.READ_PHONE_STATE)
+        } else {
+            //El permiso ya ha sido otorgado
+            llamar()
+        }
+    }
+
+    private fun llamar(){
+        val phoneNumber = number
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$phoneNumber")
+        startActivity(intent)
+    }
+
     private fun cargarDatos(){
         val cadena = arguments?.getString("cadena")
         alias = cadena
