@@ -27,8 +27,8 @@ import com.like.OnLikeListener
 class NegocioAdapter(
     private val negocios: List<Negocio>,
     private var listener: OnItemClickListenerNegocio? = null ,
-    private val context: Context
-
+    private val context: Context,
+    private val isSnackbar: Boolean
 
 ) :
 
@@ -93,42 +93,11 @@ class NegocioAdapter(
 
                 }
                 override fun unLiked(likeButton: LikeButton) {
-                    // Elimina el negocio de la lista y notifica al adaptador sobre el cambio
-                    val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        (negocios as MutableList<Negocio>).remove(negocio)
-                        notifyItemRemoved(position)
+                    if(isSnackbar){
+                        unlikedSsackbar(negocio,likeButton, adapterPosition)
+                    }else{
+                        unliked(negocio.alias)
                     }
-                    val snackbar = Snackbar.make(likeButton, "Negocio eliminado", Snackbar.LENGTH_LONG)
-                    snackbar.setAction("Deshacer") {
-                        (negocios as MutableList<Negocio>).add(position, negocio)
-                        notifyItemInserted(position)
-                    }
-                    snackbar.addCallback(object : Snackbar.Callback() {
-                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                // El Snackbar se ha descartado sin seleccionar "Deshacer", por lo tanto, eliminamos el documento
-                                val alias = negocio.alias
-                                val userId = FirebaseAuth.getInstance().currentUser?.uid
-                                val query = offersCollection.whereEqualTo("id_user", userId).whereEqualTo("alias", alias)
-                                query.get().addOnSuccessListener { documents ->
-                                    for (document in documents) {
-                                        document.reference.delete()
-                                            .addOnSuccessListener {
-                                                Log.d(TAG, "Documento eliminado correctamente")
-                                            }
-                                            .addOnFailureListener { e ->
-                                                Log.w(TAG, "Error al eliminar el documento", e)
-                                            }
-                                    }
-                                }.addOnFailureListener { exception ->
-                                    Log.w(TAG, "Error al obtener el documento: ", exception)
-                                }
-                            }
-                        }
-                    })
-                    snackbar.show()
-
                 }
             })
             val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -152,6 +121,65 @@ class NegocioAdapter(
         }
 
     }
+    fun unliked(alias: String){
+        // Elimina el documento de la colección "likes" que corresponde a este usuario y a este negocio
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val query = offersCollection.whereEqualTo("id_user", userId).whereEqualTo("alias", alias)
+        query.get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                document.reference.delete()
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Documento eliminado correctamente")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error al eliminar el documento", e)
+                    }
+            }
+        }.addOnFailureListener { exception ->
+            Log.w(TAG, "Error al obtener el documento: ", exception)
+        }
+
+
+
+    }
+    fun unlikedSsackbar(negocio: Negocio, likeButton: LikeButton, position: Int){
+        // Elimina el negocio de la lista y notifica al adaptador sobre el cambio
+        //val position = adapterPosition
+        if (position != RecyclerView.NO_POSITION) {
+            (negocios as MutableList<Negocio>).remove(negocio)
+            notifyItemRemoved(position)
+        }
+        val snackbar = Snackbar.make(likeButton, "Negocio eliminado", Snackbar.LENGTH_LONG)
+        snackbar.setAction("Deshacer") {
+            (negocios as MutableList<Negocio>).add(position, negocio)
+            notifyItemInserted(position)
+        }
+        snackbar.addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                    // El Snackbar se ha descartado sin seleccionar "Deshacer", por lo tanto, eliminamos el documento
+                    val alias = negocio.alias
+                    val userId = FirebaseAuth.getInstance().currentUser?.uid
+                    val query = offersCollection.whereEqualTo("id_user", userId).whereEqualTo("alias", alias)
+                    query.get().addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            document.reference.delete()
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Documento eliminado correctamente")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w(TAG, "Error al eliminar el documento", e)
+                                }
+                        }
+                    }.addOnFailureListener { exception ->
+                        Log.w(TAG, "Error al obtener el documento: ", exception)
+                    }
+                }
+            }
+        })
+        snackbar.show()
+    }
+
     fun showAlert(context: Context, title: String, message: String) {
         AlertDialog.Builder(context)
             .setTitle(title)

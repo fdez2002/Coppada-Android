@@ -82,7 +82,7 @@ class DetallCategoryFragment : Fragment() {
                         // Configurar RecyclerView y Adapter
                         val recyclerView = binding.rvNegocios2
                         recyclerView.layoutManager = LinearLayoutManager(context)
-                        val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext()) }
+                        val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext(), false) }
 
                         recyclerView.adapter = adapter
 
@@ -110,7 +110,7 @@ class DetallCategoryFragment : Fragment() {
             // Si la lista de negocios ya ha sido inicializada, se configura el RecyclerView con los datos ya cargados
             val recyclerView = binding.rvNegocios2
             recyclerView.layoutManager = LinearLayoutManager(context)
-            val adapter = NegocioAdapter(negocioList!!, null, requireContext())
+            val adapter = NegocioAdapter(negocioList!!, null, requireContext(), false)
             recyclerView.adapter = adapter
 
             adapter.setOnItemClickListener(object : OnItemClickListenerNegocio {

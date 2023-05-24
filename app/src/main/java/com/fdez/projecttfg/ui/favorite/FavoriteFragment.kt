@@ -79,7 +79,7 @@ class FavoriteFragment : Fragment() {
                                     //Configurar RecyclerView y Adapter
                                     val recyclerView = binding.rvLikes
                                     recyclerView.layoutManager = LinearLayoutManager(context)
-                                    val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext()) }
+                                    val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext(), true) }
                                     recyclerView.adapter = adapter
 
                                     adapter?.setOnItemClickListener(object :

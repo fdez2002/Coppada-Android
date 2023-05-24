@@ -156,7 +156,7 @@ class HomeFragment : Fragment() {
                 //Configurar RecyclerView y Adapter
                 val recyclerView = binding.rvNegocios
                 recyclerView.layoutManager = LinearLayoutManager(context)
-                val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext()) }
+                val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext(), false) }
                 recyclerView.adapter = adapter
 
                 adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
