@@ -48,6 +48,7 @@
 
 
     <!-- Widget -->
-    <string name="widget_no_favorites_message">Add widget</string>
+    <string name="widget_name">Mi Widget Favoritos</string>
+
 
 </resources>

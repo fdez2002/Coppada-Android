@@ -70,7 +70,6 @@ class FavoriteFragment : Fragment() {
                     for (document in documents) {
                         val alias = document.getString("alias")
                         if (alias != null) {
-                            // Aquí puedes utilizar el valor del alias obtenido
                             CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
                                 val negocio = YelpApi().getAlias(alias)
                                 negocioList.add(negocio)
