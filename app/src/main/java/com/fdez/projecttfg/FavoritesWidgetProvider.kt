@@ -29,7 +29,7 @@ class FavoritesWidgetProvider : AppWidgetProvider() {
             context,
             0,
             openFavoritesIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE // Agrega la bandera FLAG_IMMUTABLE
         )
 
         // Asigna el PendingIntent a la vista del widget
