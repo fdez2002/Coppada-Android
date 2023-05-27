@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.fdez.projecttfg.databinding.ActivityMainBinding
+import com.fdez.projecttfg.ui.favorite.FavoriteFragment
 import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
@@ -19,8 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        FirebaseApp.initializeApp(this);
-
+        FirebaseApp.initializeApp(this)
 
         val navView: BottomNavigationView = binding.bottomNavigation
 
@@ -33,10 +33,11 @@ class MainActivity : AppCompatActivity() {
             )
         )
         navView.setupWithNavController(navController)
+
+        // Verifica si se abrió la actividad desde el PendingIntent con la acción adecuada
+        if (intent.action == "com.fdez.projecttfg.ACTION_OPEN_FAVORITES") {
+            // Navega al FavoritesFragment
+            navController.navigate(R.id.navigation_favorite)
+        }
     }
-
-
-
-
-
 }
