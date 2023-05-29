@@ -10,11 +10,10 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.fdez.projecttfg.Api.YelpApi
+import com.fdez.projecttfg.api.YelpApi
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.FragmentMapBinding

@@ -1,11 +1,8 @@
-package com.fdez.projecttfg.Api
+package com.fdez.projecttfg.api
 
 import com.fdez.projecttfg.BusinessSearchResponse
 import com.fdez.projecttfg.DetailBusiness
 import com.fdez.projecttfg.ReviewResponse
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

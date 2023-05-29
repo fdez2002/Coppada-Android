@@ -1,4 +1,4 @@
-package com.fdez.projecttfg.Api
+package com.fdez.projecttfg.api
 
 import com.fdez.projecttfg.DetailBusiness
 import com.fdez.projecttfg.Negocio

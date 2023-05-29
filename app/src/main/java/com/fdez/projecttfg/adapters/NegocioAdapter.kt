@@ -6,15 +6,10 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
+import com.fdez.projecttfg.api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Negocio
-import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth

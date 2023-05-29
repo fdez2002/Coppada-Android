@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
-import com.fdez.projecttfg.Api.YelpApi
+import com.fdez.projecttfg.api.OnItemClickListenerNegocio
+import com.fdez.projecttfg.api.YelpApi
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
 import com.fdez.projecttfg.adapters.NegocioAdapter

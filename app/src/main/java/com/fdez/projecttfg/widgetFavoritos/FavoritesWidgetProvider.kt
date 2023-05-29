@@ -1,13 +1,13 @@
-package com.fdez.projecttfg
+package com.fdez.projecttfg.widgetFavoritos
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.widget.ArrayAdapter
 import android.widget.RemoteViews
+import com.fdez.projecttfg.MainActivity
+import com.fdez.projecttfg.R
 
 class FavoritesWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(

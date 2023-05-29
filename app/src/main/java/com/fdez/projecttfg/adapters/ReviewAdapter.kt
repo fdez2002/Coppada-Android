@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.fdez.projecttfg.Api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Review
-import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
 import com.fdez.projecttfg.databinding.ItemCardReviwBinding
 
 class ReviewAdapter (

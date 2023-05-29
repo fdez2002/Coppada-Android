@@ -2,8 +2,17 @@
     android:id="@+id/favwid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/action_bar_color"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/koulen_regular"
+        android:text="@string/tv_fav"
+        android:textColor="@color/light_blue_50"
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/list"

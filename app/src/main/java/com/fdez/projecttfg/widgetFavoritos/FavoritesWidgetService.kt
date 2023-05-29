@@ -1,14 +1,15 @@
-package com.fdez.projecttfg
+package com.fdez.projecttfg.widgetFavoritos
 
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import androidx.lifecycle.MutableLiveData
-import com.fdez.projecttfg.Api.YelpApi
+import com.bumptech.glide.Glide
+import com.fdez.projecttfg.api.YelpApi
+import com.fdez.projecttfg.Negocio
+import com.fdez.projecttfg.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
@@ -49,10 +50,33 @@ class FavoritesWidgetRemoteViewsFactory(private val context: Context) :
     override fun hasStableIds(): Boolean = true
 
     override fun getViewAt(position: Int): RemoteViews {
-        val remoteViews = RemoteViews(context.packageName, android.R.layout.simple_list_item_1)
-        remoteViews.setTextViewText(android.R.id.text1, negocioList[position].name)
+        val remoteViews = RemoteViews(context.packageName, R.layout.widget_item_layout)
+        remoteViews.setTextViewText(R.id.widget_item_name, negocioList[position].name)
+
+        // Cargar la imagen utilizando Glide
+        val bitmap = getBitmapFromUrl(negocioList[position].image_url)
+
+        // Establecer la imagen en el ImageView utilizando setImageViewBitmap()
+        remoteViews.setImageViewBitmap(R.id.widget_item_image, bitmap)
+
+
         return remoteViews
     }
+    private fun getBitmapFromUrl(imageUrl: String): Bitmap? {
+        try {
+            // Utilizar Glide para cargar la imagen en un formato compatible
+            return Glide.with(context.applicationContext)
+                .asBitmap()
+                .load(imageUrl)
+                .submit()
+                .get()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
 
     override fun getCount(): Int = negocioList.size
 
