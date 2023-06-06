@@ -1,5 +1,6 @@
 package com.fdez.projecttfg.widgetFavoritos
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,6 +8,7 @@ import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.bumptech.glide.Glide
+import com.fdez.projecttfg.MainActivity
 import com.fdez.projecttfg.api.YelpApi
 import com.fdez.projecttfg.Negocio
 import com.fdez.projecttfg.R
@@ -58,7 +60,6 @@ class FavoritesWidgetRemoteViewsFactory(private val context: Context) :
 
         // Establecer la imagen en el ImageView utilizando setImageViewBitmap()
         remoteViews.setImageViewBitmap(R.id.widget_item_image, bitmap)
-
 
         return remoteViews
     }

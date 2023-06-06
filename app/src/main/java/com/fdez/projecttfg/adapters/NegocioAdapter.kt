@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fdez.projecttfg.api.OnItemClickListenerNegocio
 import com.fdez.projecttfg.Negocio
+import com.fdez.projecttfg.R
 import com.fdez.projecttfg.databinding.ItemCardLocalesBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -40,7 +41,7 @@ class NegocioAdapter(
         fun bind(negocio: Negocio) {
             Glide.with(binding.root.context)
                 .load(negocio.image_url)
-                .error(com.denzcoskun.imageslider.R.drawable.error)
+                .error(R.drawable.iconimagenotfoundfree)
                 .into(binding.imgNegocio)
             binding.tvNombre.text = negocio.name
             //binding.tvLugar.text = negocio.coordinates!!.city

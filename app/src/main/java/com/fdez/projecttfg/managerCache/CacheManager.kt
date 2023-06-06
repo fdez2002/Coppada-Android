@@ -26,4 +26,12 @@ class CacheManager(private val context: Context) {
             null
         }
     }
+
+    fun clearCache() {
+        sharedPreferences.edit().clear().apply()
+    }
+
+
+
+
 }

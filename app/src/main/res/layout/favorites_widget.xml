@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/favwid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/action_bar_color"
+    android:background="#C7D0D5"
     android:orientation="vertical">
 
     <TextView
@@ -10,12 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/koulen_regular"
+        android:paddingLeft="10dp"
         android:text="@string/tv_fav"
-        android:textColor="@color/light_blue_50"
-        android:textSize="20sp" />
+        android:textColor="@color/action_bar_color"
+        android:textSize="24sp" />
 
     <ListView
         android:id="@+id/list"
+        style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

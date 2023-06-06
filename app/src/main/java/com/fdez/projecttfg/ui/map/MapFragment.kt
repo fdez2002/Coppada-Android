@@ -97,20 +97,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 negocioList.addAll(cachedNegocioList)
 
             } else {
-                //Si no está en la cache, realiza la llamada a la API
-                val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", "Madrid")
-                negocioList.addAll(negocioListFastFood)
-                val negocioListRestBar = YelpApi().search("restaurantes,bars", "Madrid")
-                negocioList.addAll(negocioListRestBar)
-                val negocioListCafeTe = YelpApi().search("Coffee & Tea", "Madrid")
-                negocioList.addAll(negocioListCafeTe)
-                //val negocioListOil = YelpApi().search("Gasolineras", "Madrid")
-                //negocioList.addAll(negocioListOil)
-                val negocioListBake = YelpApi().search("Bakeries", "Madrid")
-                negocioList.addAll(negocioListBake)
+                try {
+                    //Si no está en la cache, realiza la llamada a la API
+                    val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", "Madrid")
+                    //val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", requireContext())
+                    negocioList.addAll(negocioListFastFood)
+                    val negocioListRestBar = YelpApi().search("restaurantes,bars", "Madrid")
+                    //val negocioListRestBar = YelpApi().search("restaurantes,bars", requireContext())
+                    negocioList.addAll(negocioListRestBar)
+                    val negocioListCafeTe = YelpApi().search("Coffee & Tea", "Madrid")
+                    //val negocioListCafeTe = YelpApi().search("Coffee & Tea", requireContext())
+                    negocioList.addAll(negocioListCafeTe)
+                    //val negocioListOil = YelpApi().search("Gasolineras", "Madrid")
+                    //negocioList.addAll(negocioListOil)
+                    val negocioListBake = YelpApi().search("Bakeries", "Madrid")
+                    //val negocioListBake = YelpApi().search("Bakeries", requireContext())
+                    negocioList.addAll(negocioListBake)
 
-                //Guarda la lista en la cache para futuras consultas
-                cache.saveData(cacheKey, negocioList)
+                    //Guarda la lista en la cache para futuras consultas
+                    cache.saveData(cacheKey, negocioList)
+                }catch (ex: Exception){}
+
             }
 
             //Si no hay negocios en la lista, no hay nada que hacer

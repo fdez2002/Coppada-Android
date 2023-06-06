@@ -1,5 +1,6 @@
 package com.fdez.projecttfg.ui.home
 
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +24,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.os.Looper
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 
 class HomeFragment : Fragment() {
@@ -40,6 +49,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var scrollPosition = 0
+    private val locationPermissionCode = 1
 
 
 
@@ -51,8 +61,8 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        cargarRV()
+        obtenerUbicacion()
+        //cargarRV()
 
 
 
@@ -111,6 +121,14 @@ class HomeFragment : Fragment() {
             navegarCategory(categoria, titulo)
         }
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            val cache = CacheManager(requireContext())
+            cache.clearCache()
+            isDataLoaded = false
+            //cargarRV()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
         return root
     }
 
@@ -126,8 +144,90 @@ class HomeFragment : Fragment() {
             bundle
         )
     }
+    private fun obtenerUbicacion() {
+        val locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-    private fun cargarRV() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Solicitar permisos al usuario si aún no se han otorgado
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                locationPermissionCode
+            )
+        } else {
+            // Los permisos ya se han otorgado, obtener la ubicación actual
+            obtenerUbicacionActual(locationManager)
+        }
+    }
+
+    private fun obtenerUbicacionActual(locationManager: LocationManager) {
+        // Definir un LocationListener para recibir las actualizaciones de ubicación
+        val locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                // La ubicación actual se ha obtenido aquí
+                val latitude = location.latitude
+                val longitude = location.longitude
+
+                // Utilizar la ubicación en la búsqueda de negocios o realizar otras acciones necesarias
+                val locationString = "$latitude,$longitude"
+                cargarRV(locationString)
+            }
+
+            // Implementar los demás métodos del LocationListener si es necesario
+        }
+
+        // Registrar el LocationListener para recibir actualizaciones de ubicación
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        locationManager.requestSingleUpdate(
+            LocationManager.GPS_PROVIDER,
+            locationListener,
+            Looper.getMainLooper()
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == locationPermissionCode) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Los permisos de ubicación han sido otorgados
+                val locationManager =
+                    activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                obtenerUbicacionActual(locationManager)
+            } else {
+                // El usuario denegó los permisos de ubicación, manejar esta situación según tus necesidades
+            }
+        }
+    }
+
+
+    private fun cargarRV(localizacion: String) {
 
         val cacheKey = "negocioListFavo"
         val cache = CacheManager(requireContext())
@@ -136,6 +236,7 @@ class HomeFragment : Fragment() {
             //Intenta obtener la lista de negocios de la cache
             val cachedNegocioList = cache.loadData<List<Negocio>>(cacheKey)
 
+
             if (cachedNegocioList != null && cachedNegocioList.isNotEmpty()) {
                 //Si la lista está en la cache, úsala directamente
                 negocioList = cachedNegocioList
@@ -143,7 +244,8 @@ class HomeFragment : Fragment() {
 
             } else {
                 //Si no está en la cache, realiza la llamada a la API
-                negocioList = YelpApi().search("Fast Food", "Madrid")
+                //negocioList = YelpApi().searchCiudad("Fast Food", "Madrid")
+                negocioList = YelpApi().search("Fast Food", localizacion)
                 Log.d(tag, negocioList.toString())
                 //Guarda la lista en la cache para futuras consultas
                 cache.saveData(cacheKey, negocioList)

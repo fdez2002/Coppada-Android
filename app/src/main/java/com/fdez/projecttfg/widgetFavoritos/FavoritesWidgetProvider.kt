@@ -25,15 +25,19 @@ class FavoritesWidgetProvider : AppWidgetProvider() {
         val openFavoritesIntent = Intent(context, MainActivity::class.java).apply {
             action = "com.fdez.projecttfg.ACTION_OPEN_FAVORITES"
         }
+
+        openFavoritesIntent.putExtra("openFavoritesFragment", true)  // Nueva línea
+
         val pendingIntent = PendingIntent.getActivity(
             context,
             0,
             openFavoritesIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE // Agrega la bandera FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+
         // Asigna el PendingIntent a la vista del widget
-        remoteViews.setPendingIntentTemplate(R.id.list, pendingIntent)
+        remoteViews.setPendingIntentTemplate(R.id.linear_widget, pendingIntent)
 
         // Notifica al administrador del widget que los datos han cambiado
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list)

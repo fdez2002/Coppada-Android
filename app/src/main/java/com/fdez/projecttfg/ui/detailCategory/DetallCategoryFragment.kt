@@ -75,7 +75,8 @@ class DetallCategoryFragment : Fragment() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 val cadena = arguments?.getString("category")
-                negocioList = YelpApi().search(cadena.toString(), "Madrid")
+                negocioList = YelpApi().searchCiudad(cadena.toString(), "Madrid")
+                //negocioList = YelpApi().search(cadena.toString(), requireContext())
                 try{
                     withContext(Dispatchers.Main) {
                         // Configurar RecyclerView y Adapter
