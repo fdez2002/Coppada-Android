@@ -48,9 +48,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private var scrollPosition = 0
     private val locationPermissionCode = 1
-
+    private var locationString: String = ""
 
 
     override fun onCreateView(
@@ -61,25 +60,17 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        obtenerUbicacion()
-        //cargarRV()
 
-
-
+        if(locationString != ""){
+            cargarRV(locationString)
+        }else{
+            obtenerUbicacion()
+        }
 
         binding.searchview.editText.setOnEditorActionListener { v, actionId, event ->
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val ciudad = binding.searchview.text?.trim().toString()
-                val bundle = Bundle()
-                bundle.putString("ciudad", ciudad)
-
-                val fragment = DetalleNegocioFragment.newInstance(ciudad)
-                fragment.arguments = bundle
-                findNavController().navigate(
-                    R.id.action_navigation_home_to_resCiudadFragment,
-                    bundle
-                )
+                buscarCiudad()
                 true
             } else {
                 binding.searchBar.text = binding.searchview.text
@@ -131,6 +122,19 @@ class HomeFragment : Fragment() {
 
         return root
     }
+    private fun buscarCiudad(){
+        val ciudad = binding.searchview.text?.trim().toString()
+        val bundle = Bundle()
+        bundle.putString("ciudad", ciudad)
+
+        val fragment = DetalleNegocioFragment.newInstance(ciudad)
+        fragment.arguments = bundle
+        findNavController().navigate(
+            R.id.action_navigation_home_to_resCiudadFragment,
+            bundle
+        )
+
+    }
 
 
     private fun navegarCategory(categoria: String, titulo: String){
@@ -175,7 +179,7 @@ class HomeFragment : Fragment() {
                 val longitude = location.longitude
 
                 // Utilizar la ubicación en la búsqueda de negocios o realizar otras acciones necesarias
-                val locationString = "$latitude,$longitude"
+                locationString = "$latitude,$longitude"
                 cargarRV(locationString)
             }
 
@@ -254,29 +258,33 @@ class HomeFragment : Fragment() {
             //Log.d(tag, negocioList.toString())
 
             withContext(Dispatchers.Main) {
-                //Configurar RecyclerView y Adapter
-                val recyclerView = binding.rvNegocios
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext(), false) }
-                recyclerView.adapter = adapter
-
-                adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
-                    override fun onItemClick(negocio: Negocio) {
-                        val nombreNegocioAlias = negocio.alias ?: return
-
-                        val bundle = Bundle()
-                        bundle.putString("cadena", nombreNegocioAlias)
-
-                        val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
-                        fragment.arguments = bundle
-                        findNavController().navigate(
-                            R.id.action_navigation_home_to_detalleNegocioFragment,
-                            bundle
-                        )
-                    }
-                })
+                llenarRecycler()
             }
         }
+    }
+    private fun llenarRecycler(){
+        //Configurar RecyclerView y Adapter
+        val recyclerView = binding.rvNegocios
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        val adapter = negocioList?.let { NegocioAdapter(it, null, requireContext(), false) }
+        recyclerView.adapter = adapter
+
+        adapter?.setOnItemClickListener(object : OnItemClickListenerNegocio {
+            override fun onItemClick(negocio: Negocio) {
+                val nombreNegocioAlias = negocio.alias ?: return
+
+                val bundle = Bundle()
+                bundle.putString("cadena", nombreNegocioAlias)
+
+                val fragment = DetalleNegocioFragment.newInstance(nombreNegocioAlias)
+                fragment.arguments = bundle
+                findNavController().navigate(
+                    R.id.action_navigation_home_to_detalleNegocioFragment,
+                    bundle
+                )
+            }
+        })
+
     }
 
     override fun onResume() {
