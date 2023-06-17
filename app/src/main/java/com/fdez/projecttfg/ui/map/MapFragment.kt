@@ -1,6 +1,8 @@
 package com.fdez.projecttfg.ui.map
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.LruCache
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -80,10 +83,37 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         //nestedScrollView.visibility = View.GONE
     }
 
-
+    /**
+     * Se ejecuta cuando el mapa esta listo para ser utilizado
+     * Se le pasa las coordenadas de los restaurantes para que le añada un point en el mapa
+     * Al seleccionar uno de ellos se ejecutará un BottomSheet con mas detalle sobre el
+     */
     @SuppressLint("MissingInflatedId")
     override fun onMapReady(googleMap: GoogleMap) {
+
         mMap = googleMap
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        // Habilitar la capa de ubicación del mapa
+        mMap.isMyLocationEnabled = true
+        // Mostrar el botón de "Mi ubicación" en el mapa
+        mMap.uiSettings.isMyLocationButtonEnabled = true
 
         CoroutineScope(Dispatchers.IO).launch {
             val cacheKey = "negocioList"
@@ -100,18 +130,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 try {
                     //Si no está en la cache, realiza la llamada a la API
                     val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", "Madrid")
-                    //val negocioListFastFood = YelpApi().search("Fast Food,Burgers,Pizza", requireContext())
                     negocioList.addAll(negocioListFastFood)
                     val negocioListRestBar = YelpApi().search("restaurantes,bars", "Madrid")
-                    //val negocioListRestBar = YelpApi().search("restaurantes,bars", requireContext())
                     negocioList.addAll(negocioListRestBar)
                     val negocioListCafeTe = YelpApi().search("Coffee & Tea", "Madrid")
-                    //val negocioListCafeTe = YelpApi().search("Coffee & Tea", requireContext())
                     negocioList.addAll(negocioListCafeTe)
-                    //val negocioListOil = YelpApi().search("Gasolineras", "Madrid")
                     //negocioList.addAll(negocioListOil)
                     val negocioListBake = YelpApi().search("Bakeries", "Madrid")
-                    //val negocioListBake = YelpApi().search("Bakeries", requireContext())
                     negocioList.addAll(negocioListBake)
 
                     //Guarda la lista en la cache para futuras consultas

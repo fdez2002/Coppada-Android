@@ -28,6 +28,7 @@ class DetallCategoryFragment : Fragment() {
 
     // Booleano para comprobar si la lista de negocios ya ha sido obtenida de la API
     private var isDataLoaded = false
+
     private var _binding: FragmentDetallCategoryBinding? = null
 
     private var bottomNavigationView: BottomNavigationView? = null
@@ -75,8 +76,7 @@ class DetallCategoryFragment : Fragment() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 val cadena = arguments?.getString("category")
-                negocioList = YelpApi().searchCiudad(cadena.toString(), "Madrid")
-                //negocioList = YelpApi().search(cadena.toString(), requireContext())
+                negocioList = YelpApi().search(cadena.toString(), "Madrid")
                 try{
                     withContext(Dispatchers.Main) {
                         // Configurar RecyclerView y Adapter

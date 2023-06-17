@@ -52,7 +52,7 @@ class NegocioAdapterSmall(
 
                     //Guarda el alias del usuario en la base de datos
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
-                    val alias = negocio.alias // Aquí debes usar el alias que el usuario haya ingresado
+                    val alias = negocio.alias
                     if(userId != null ) {
                         val offer = hashMapOf(
                             "id_user" to userId.toString(),
@@ -100,7 +100,7 @@ class NegocioAdapterSmall(
                 }
             })
             val userId = FirebaseAuth.getInstance().currentUser?.uid
-            val alias = negocio.alias //Aquí debes usar el alias que el usuario haya ingresado
+            val alias = negocio.alias
 
             val query = offersCollection
                 .whereEqualTo("id_user", userId.toString())

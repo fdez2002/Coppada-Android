@@ -63,7 +63,7 @@ class NegocioAdapter(
 
                     //Guarda el alias del usuario en la base de datos
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
-                    val alias = negocio.alias // Aquí debes usar el alias que el usuario haya ingresado
+                    val alias = negocio.alias
                     if(userId != null ) {
                         val offer = hashMapOf(
                             "id_user" to userId.toString(),
@@ -97,7 +97,7 @@ class NegocioAdapter(
                 }
             })
             val userId = FirebaseAuth.getInstance().currentUser?.uid
-            val alias = negocio.alias //Aquí debes usar el alias que el usuario haya ingresado
+            val alias = negocio.alias
 
             val query = offersCollection
                 .whereEqualTo("id_user", userId.toString())
@@ -185,7 +185,7 @@ class NegocioAdapter(
             }
             .show()
     }
-    // Agrega el método removeNegocio() para eliminar un elemento de la lista
+
     fun removeNegocio(negocio: Negocio) {
         val position = negocios.indexOf(negocio)
         if (position != -1) {

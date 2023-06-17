@@ -103,11 +103,9 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         if (isGranted) {
             //El usuario otorgó el permiso
-            //Realiza las operaciones que requieren el permiso
             llamar()
         } else {
             //El usuario denegó el permiso
-            //Maneja esta situación según tus necesidades
         }
     }
 
@@ -228,6 +226,8 @@ class DetalleNegocioFragment : Fragment(), OnMapReadyCallback {
                     .position(latLngBusines!!)
             )
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngBusines!!, 15.0f))
+
+
 
         }catch (ex: Exception){
             Log.d(tag, ex.toString())

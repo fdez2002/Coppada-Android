@@ -10,6 +10,9 @@ class CacheManager(private val context: Context) {
 
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("cache", Context.MODE_PRIVATE)
 
+    /**
+     * Se utiliza para guardar datos en el almacenamiento compartido (SharedPreferences) utilizando una clave (key) y los datos a guardar.
+     */
     fun <T> saveData(key: String, data: T) {
         val json = Gson().toJson(data)
         sharedPreferences.edit {
@@ -18,6 +21,10 @@ class CacheManager(private val context: Context) {
         }
     }
 
+    /**
+     * Utiliza para cargar datos del almacenamiento compartido (SharedPreferences)
+     * utilizando una clave (key) y devolver los datos deserializados en el tipo especificado.
+     */
     inline fun <reified T> loadData(key: String): T? {
         val json = sharedPreferences.getString(key, null)
         return if (json != null) {
@@ -27,6 +34,9 @@ class CacheManager(private val context: Context) {
         }
     }
 
+    /**
+     * Se utiliza para eliminar todos los datos almacenados
+     */
     fun clearCache() {
         sharedPreferences.edit().clear().apply()
     }

@@ -68,7 +68,9 @@ class AccountFragment : Fragment() {
         return root
     }
 
-
+    /**
+     * Se utiliza para restablecer la contraseña del usuario actualmente autenticado.
+     */
     private fun resetPass() {
         //val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
@@ -114,6 +116,9 @@ class AccountFragment : Fragment() {
         binding.tiContrase.isVisible = false
     }
 
+    /**
+     * Cierra la sesion actual del usuario
+     */
     private fun cerrarSesion() {
         FirebaseAuth.getInstance().signOut()
         Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_LONG).show()
@@ -123,7 +128,9 @@ class AccountFragment : Fragment() {
 
     }
 
-
+    /**
+     * Se utiliza para detectar si un usuario ha iniciado sesión y mostrar sus datos en los campos correspondientes.
+     */
     private fun detectarLoginUser() {
         //Obtener datos del usuario y asignar a los TextField
         val currentUser = auth.currentUser
@@ -151,6 +158,9 @@ class AccountFragment : Fragment() {
 
     }
 
+    /**
+     * Se utiliza para realizar el inicio de sesión de un usuario
+     */
     private fun login() {
         // Verificar si hay un usuario actualmente autenticado
         val currentUser = auth.currentUser
@@ -195,6 +205,10 @@ class AccountFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * se utiliza para registrar a un nuevo usuario en la aplicación.
+     */
     private fun registerUser() {
         val email = binding.textFieldCorreo.text.toString()
         val password = binding.textFieldContrasena.text.toString()
@@ -244,7 +258,9 @@ class AccountFragment : Fragment() {
                 }
             }
     }
-    //Función para mostrar el AlertDialog
+    /**
+     * Función para mostrar el AlertDialog
+     */
     fun showAlert(context: Context, title: String, message: String) {
         AlertDialog.Builder(context)
             .setTitle(title)
@@ -255,6 +271,9 @@ class AccountFragment : Fragment() {
             .show()
     }
 
+    /**
+     * Envia un correo de verificacion al usuario
+     */
     private fun correoVerificacion(){
         val user = auth.currentUser
         user?.sendEmailVerification()

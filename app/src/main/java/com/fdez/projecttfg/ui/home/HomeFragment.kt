@@ -60,11 +60,12 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        cargarRV(locationString)
 
-        if(locationString != ""){
+        if (locationString != "") {
             cargarRV(locationString)
-        }else{
-            obtenerUbicacion()
+        } else {
+            //obtenerUbicacion()
         }
 
         binding.searchview.editText.setOnEditorActionListener { v, actionId, event ->
@@ -119,10 +120,14 @@ class HomeFragment : Fragment() {
             //cargarRV()
             binding.swipeRefreshLayout.isRefreshing = false
         }
-
         return root
+
     }
-    private fun buscarCiudad(){
+
+    /**
+     * Se encarga de buscar la ciudad y navegar hacia resCiudadFragment
+     */
+    private fun buscarCiudad() {
         val ciudad = binding.searchview.text?.trim().toString()
         val bundle = Bundle()
         bundle.putString("ciudad", ciudad)
@@ -136,8 +141,10 @@ class HomeFragment : Fragment() {
 
     }
 
-
-    private fun navegarCategory(categoria: String, titulo: String){
+    /**
+     * Permite navegar desde home a detalle categoria pasandole dos parametros (categoria, titulo)
+     */
+    private fun navegarCategory(categoria: String, titulo: String) {
         val bundle = Bundle()
         bundle.putString("category", categoria)
         bundle.putString("titulo", titulo)
@@ -148,8 +155,10 @@ class HomeFragment : Fragment() {
             bundle
         )
     }
+
     private fun obtenerUbicacion() {
-        val locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager =
+            activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -170,6 +179,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * Obtenemos la ubicación actual del dispositivo
+     */
     private fun obtenerUbicacionActual(locationManager: LocationManager) {
         // Definir un LocationListener para recibir las actualizaciones de ubicación
         val locationListener = object : LocationListener {
@@ -211,6 +223,9 @@ class HomeFragment : Fragment() {
         )
     }
 
+    /**
+     * Método de devolución de llamada que se invoca cuando el usuario responde a la solicitud de permisos en Android
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -225,18 +240,20 @@ class HomeFragment : Fragment() {
                     activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
                 obtenerUbicacionActual(locationManager)
             } else {
-                // El usuario denegó los permisos de ubicación, manejar esta situación según tus necesidades
+                // El usuario denegó los permisos de ubicación
             }
         }
     }
 
-
+    /**
+     * Se encarga de cargar los datos de negocios en el RecyclerView
+     */
     private fun cargarRV(localizacion: String) {
 
         val cacheKey = "negocioListFavo"
         val cache = CacheManager(requireContext())
 
-        CoroutineScope(Dispatchers.IO ).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             //Intenta obtener la lista de negocios de la cache
             val cachedNegocioList = cache.loadData<List<Negocio>>(cacheKey)
 
@@ -248,8 +265,8 @@ class HomeFragment : Fragment() {
 
             } else {
                 //Si no está en la cache, realiza la llamada a la API
-                //negocioList = YelpApi().searchCiudad("Fast Food", "Madrid")
-                negocioList = YelpApi().search("Fast Food", localizacion)
+                //negocioList = YelpApi().search("Fast Food",  localizacion)
+                negocioList = YelpApi().search("Fast Food", "Madrid")
                 Log.d(tag, negocioList.toString())
                 //Guarda la lista en la cache para futuras consultas
                 cache.saveData(cacheKey, negocioList)
@@ -262,7 +279,11 @@ class HomeFragment : Fragment() {
             }
         }
     }
-    private fun llenarRecycler(){
+
+    /**
+     * Configura el RecyclerView y un adaptador
+     */
+    private fun llenarRecycler() {
         //Configurar RecyclerView y Adapter
         val recyclerView = binding.rvNegocios
         recyclerView.layoutManager = LinearLayoutManager(context)

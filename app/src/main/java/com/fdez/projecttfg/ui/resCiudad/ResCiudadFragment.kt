@@ -62,8 +62,10 @@ class ResCiudadFragment : Fragment() {
         binding.topAppBarRec.title = "Lugares en"
         binding.topAppBarRec.subtitle = arguments?.getString("ciudad")
 
+        // Obtenemos la ciudad
         val ciudad = arguments?.getString("ciudad")
 
+        // Buscamos en la Api enviando la ciudad que ha colocado el usuario
         mostrarResBar(ciudad)
         mostrarCafeTe(ciudad)
         mostrarBakeries(ciudad)
@@ -80,7 +82,7 @@ class ResCiudadFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                negocioListBYR = YelpApi().searchCiudad("restaurantes,bars", ciudad.toString())
+                negocioListBYR = YelpApi().search("restaurantes,bars", ciudad.toString())
                 withContext(Dispatchers.Main) {
                     if(negocioListBYR.isNullOrEmpty()){
                         binding.textViewRB.visibility = View.GONE
@@ -109,7 +111,7 @@ class ResCiudadFragment : Fragment() {
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                negocioListCafeTe = YelpApi().searchCiudad("Coffee & Tea", ciudad.toString())
+                negocioListCafeTe = YelpApi().search("Coffee & Tea", ciudad.toString())
                 withContext(Dispatchers.Main) {
                     if(negocioListCafeTe.isNullOrEmpty()){
                         binding.textViewCT.visibility = View.GONE
@@ -137,7 +139,7 @@ class ResCiudadFragment : Fragment() {
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                negocioListBakeri = YelpApi().searchCiudad("Bakeries", ciudad.toString())
+                negocioListBakeri = YelpApi().search("Bakeries", ciudad.toString())
                 withContext(Dispatchers.Main) {
                     if(negocioListBakeri.isNullOrEmpty()){
                         binding.textViewP.visibility = View.GONE
@@ -166,7 +168,7 @@ class ResCiudadFragment : Fragment() {
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                negocioListCopas = YelpApi().searchCiudad("bars", ciudad.toString())
+                negocioListCopas = YelpApi().search("bars", ciudad.toString())
                 withContext(Dispatchers.Main) {
                     if(negocioListCopas.isNullOrEmpty()){
                         binding.textViewDCO.visibility = View.GONE
@@ -194,7 +196,7 @@ class ResCiudadFragment : Fragment() {
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                negocioListFatsFood = YelpApi().searchCiudad("fast food", ciudad.toString())
+                negocioListFatsFood = YelpApi().search("fast food", ciudad.toString())
                 withContext(Dispatchers.Main) {
                     if(negocioListFatsFood.isNullOrEmpty()){
                         binding.textViewFF.visibility = View.GONE
@@ -222,7 +224,7 @@ class ResCiudadFragment : Fragment() {
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                negocioListGasolineras = YelpApi().searchCiudad("Gasolineras", ciudad.toString())
+                negocioListGasolineras = YelpApi().search("Gasolineras", ciudad.toString())
                 withContext(Dispatchers.Main) {
                     if(negocioListGasolineras.isNullOrEmpty()){
                         binding.textViewGasol.visibility = View.GONE
